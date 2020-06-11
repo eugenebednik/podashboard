@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BuffRequestApiController;
+use App\Http\Controllers\Api\RequestTypesApiController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::apiResource('request-types', RequestTypesApiController::class, ['only' => ['index']]);
+    Route::apiResource('buff-requests', BuffRequestApiController::class);
 });
