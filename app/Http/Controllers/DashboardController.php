@@ -3,21 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\BuffRequest;
+use App\Services\DiscordWebhookService;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
     const PER_PAGE = 20;
 
+    protected $discordService;
+
     /**
      * Create a new controller instance.
      *
+     * @param DiscordWebhookService $discordWebhookService
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(DiscordWebhookService $discordWebhookService)
     {
         $this->middleware(['auth', 'active']);
+        $this->discordService = $discordWebhookService;
     }
 
     /**
@@ -50,6 +58,16 @@ class DashboardController extends Controller
             $buffRequest->outstanding = false;
             $buffRequest->handledBy()->associate(Auth::user());
             $buffRequest->save();
+
+            // Reply to the user via Discord
+            try {
+                $this->discordService->handle(
+                    $buffRequest->discord_snowflake,
+                    __("your buff request for {$buffRequest->requestType->name} has been fulfilled.")
+                );
+            } catch (GuzzleException $e) {
+                Log::error('Unable to fulfill Discord request.', $e->getTrace());
+            }
         }
 
         return redirect('/dashboard');
