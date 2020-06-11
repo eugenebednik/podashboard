@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/inactive', 'InactiveController@index')->name('inactive');
+Route::get('/fulfill/{id}', 'DashboardController@fulfill')->name('fulfill');
