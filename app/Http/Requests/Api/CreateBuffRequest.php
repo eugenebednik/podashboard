@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\BuffRequests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBuffRequestRequest extends FormRequest
+class CreateBuffRequest extends FormRequest
 {
     public function rules()
     {

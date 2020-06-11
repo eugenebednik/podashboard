@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\BuffRequests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBuffRequestRequest extends FormRequest
+class UpdateBuffRequest extends FormRequest
 {
     public function rules()
     {
@@ -12,6 +12,7 @@ class UpdateBuffRequestRequest extends FormRequest
             'user_name' => 'required|min:2',
             'discord_snowflake' => 'required|size:18',
             'request_type_id' => 'required|integer|exists:request_types,id',
+            'outstanding' => 'required|integer|between:0,1',
         ];
     }
 }

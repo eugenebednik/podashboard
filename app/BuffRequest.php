@@ -12,7 +12,7 @@ class BuffRequest extends Model
         'user_name',
         'discord_snowflake',
         'request_type',
-        ''
+        'outstanding',
     ];
 
     /**

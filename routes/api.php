@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\BuffRequestApiController;
-use App\Http\Controllers\Api\RequestTypesApiController;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +12,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::apiResource('request-types', RequestTypesApiController::class, ['only' => ['index']]);
-    Route::apiResource('buff-requests', BuffRequestApiController::class);
+    Route::apiResource('request-types', 'Api\RequestTypesApiController', ['only' => ['index']]);
+    Route::apiResource('buff-requests', 'Api\BuffRequestApiController');
 });

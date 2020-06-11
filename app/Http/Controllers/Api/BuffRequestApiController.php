@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\BuffRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\BuffRequests\CreateBuffRequestRequest;
-use App\Http\Requests\Api\BuffRequests\UpdateBuffRequestRequest;
+use App\Http\Requests\Api\CreateBuffRequest;
+use App\Http\Requests\Api\UpdateBuffRequest;
 use App\RequestType;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,24 +14,28 @@ class BuffRequestApiController extends Controller
 {
     public function index()
     {
-        $data = BuffRequest::query()->where('outstanding', true)->get();
+        $data = BuffRequest::where('outstanding', true)->get();
 
         return response()->json($data)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function show(Request $request, int $id)
+    public function show(BuffRequest $buffRequest)
     {
-        $data = BuffRequest::find($id);
-
-        if ($data) {
-            return response()->json($data)->setStatusCode(Response::HTTP_OK);
-        }
-
-        return response()->json(['errors' => __('Not found.')])->setStatusCode(Response::HTTP_NOT_FOUND);
+        return response()->json($buffRequest)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function create(CreateBuffRequestRequest $request)
+    public function store(CreateBuffRequest $request)
     {
+        // Check to see if this user already has a request pending.
+        $requestExists = BuffRequest::where('discord_snowflake', $request->input('discord_snowflake'))
+            ->where('outstanding', true)
+            ->exists();
+
+        if ($requestExists) {
+            return response()->json(['errors' => __('Request already exists.')])
+                ->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
+
         $buffRequest = new BuffRequest();
         $buffRequest->fill($request->all());
         $buffRequest->requestType()->associate(RequestType::findOrFail($request->input('request_type_id')));
@@ -41,22 +44,19 @@ class BuffRequestApiController extends Controller
         return response()->json($buffRequest)->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function update(UpdateBuffRequestRequest $request, int $id)
+    public function update(UpdateBuffRequest $request, BuffRequest $buffRequest)
     {
-        /** @var BuffRequest $buffRequest */
-        $buffRequest = BuffRequest::find($id);
+        $buffRequest->fill($request->all());
+        $buffRequest->requestType()->associate(RequestType::findOrFail($request->input('request_type_id')));
+        $buffRequest->handledBy()->associate(Auth::user());
+        $buffRequest->save();
 
-        if ($buffRequest) {
-            $buffRequest->fill($request->all());
-            $buffRequest->requestType()->associate(RequestType::findOrFail($request->input('request_type_id')));
-            $buffRequest->handledBy()->associate(Auth::user());
-            $buffRequest->save();
-        }
+        return response()->json($buffRequest)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function destroy(int $id)
+    public function destroy(BuffRequest $buffRequest)
     {
-        $buffRequest = BuffRequest::findOrFail($id);
+        /** @var BuffRequest $buffRequest */
         $buffRequest->delete();
 
         return response()->setStatusCode(Response::HTTP_NO_CONTENT);
