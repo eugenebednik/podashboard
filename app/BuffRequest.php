@@ -13,6 +13,8 @@ class BuffRequest extends Model
         'discord_snowflake',
         'request_type',
         'outstanding',
+        'is_alt_request',
+        'alt_name',
     ];
 
     /**
