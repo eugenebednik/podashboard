@@ -34,7 +34,7 @@
                                     <a href="#" class="btn btn-xs btn-primary" @click="editModal(user)">
                                         Edit
                                     </a>
-                                    <a href="#" class="btn btn-xs btn-danger" @click="deleteEntry(user.id, index)">
+                                    <a href="#" class="btn btn-xs btn-danger" @click="deleteEntry(user.id, index)" v-show="isNotSelf(user.id)">
                                         Delete
                                     </a>
                                 </td>
