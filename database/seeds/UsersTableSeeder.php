@@ -7,8 +7,10 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
+        /** @var User $userOne */
         User::create([
             'name' => 'Admin',
+            'alliance_id' => 1,
             'email' => 'admin@podashboard.com',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),
@@ -17,8 +19,10 @@ class UsersTableSeeder extends Seeder
             'active' => true,
         ]);
 
+
         User::create([
             'name' => 'Test PO Officer',
+            'alliance_id' => 1,
             'email' => 'test@podashboard.com',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),
@@ -29,6 +33,7 @@ class UsersTableSeeder extends Seeder
 
         User::create([
             'name' => 'Test Inactive User',
+            'alliance_id' => 1,
             'email' => 'inactive@podashboard.com',
             'email_verified_at' => \Carbon\Carbon::now(),
             'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),

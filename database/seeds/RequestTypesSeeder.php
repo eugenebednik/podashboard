@@ -1,8 +1,9 @@
 <?php
 
 use App\RequestType;
+use Illuminate\Database\Seeder;
 
-class RequestTypesSeeder extends \Illuminate\Database\Seeder
+class RequestTypesSeeder extends Seeder
 {
     public function run()
     {

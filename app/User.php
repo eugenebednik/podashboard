@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'active', 'api_token'
+        'name', 'email', 'password', 'is_admin', 'active', 'api_token', 'alliance_id'
     ];
 
     /**
@@ -55,5 +55,15 @@ class User extends Authenticatable
     public function isActive() : bool
     {
         return $this->active ? true : false;
+    }
+
+    /**
+     * Relationship between the user and their Alliance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function alliance()
+    {
+        return $this->belongsTo(Alliance::class);
     }
 }

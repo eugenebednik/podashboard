@@ -15,11 +15,11 @@ class CreateBuffRequestsTable extends Migration
     {
         Schema::create('buff_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_name');
-            $table->string('discord_snowflake');
-            $table->unsignedBigInteger('request_type_id');
+            $table->string('user_name')->index();
+            $table->string('discord_snowflake')->index();
+            $table->unsignedBigInteger('request_type_id')->index();
             $table->boolean('outstanding')->default(true);
-            $table->unsignedBigInteger('handled_by')->nullable()->default(null);
+            $table->unsignedBigInteger('handled_by')->nullable()->default(null)->index();
             $table->timestamps();
 
             $table->foreign('handled_by')
