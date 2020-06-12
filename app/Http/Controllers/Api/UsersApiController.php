@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersApiController extends Controller
 {
@@ -51,6 +52,7 @@ class UsersApiController extends Controller
             'email' => $request->input('email'),
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make($request->input('password')),
+            'api_token' => Str::random(60),
             'is_admin' => $request->input('is_admin'),
             'active' => $request->input('active'),
         ]);
