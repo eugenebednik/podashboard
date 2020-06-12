@@ -11,7 +11,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|min:2',
             'alliance_id' => 'required|exists:alliances,id',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email,'.$this->id.',id',
             'password' => 'sometimes|required|confirmed',
             'is_admin' => 'required|integer|between:0,1',
             'active' => 'required|integer|between:0,1',

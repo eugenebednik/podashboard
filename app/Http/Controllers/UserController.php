@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Alliance;
-use App\BuffRequest;
 use App\User;
 
 class UserController extends Controller

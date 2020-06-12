@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
     Route::get('users', 'UserController@index')->name('admin.user.index');
+    Route::get('alliances', 'AllianceController@index')->name('admin.alliance.index');
 });
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

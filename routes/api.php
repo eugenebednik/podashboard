@@ -14,10 +14,10 @@
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('request-types', 'Api\RequestTypesApiController', ['only' => ['index']]);
-    Route::apiResource('alliances', 'Api\AlliancesApiController', ['only' => ['index']]);
     Route::apiResource('buff-requests', 'Api\BuffRequestApiController');
 
     Route::group(['middleware' => 'admin'], function () {
-        Route::resource('users', 'Api\UsersApiController', ['except' => ['create', 'edit']]);
+        Route::apiResource('users', 'Api\UsersApiController', ['except' => ['create', 'edit']]);
+        Route::apiResource('alliances', 'Api\AlliancesApiController', ['except' => ['create', 'edit']]);
     });
 });

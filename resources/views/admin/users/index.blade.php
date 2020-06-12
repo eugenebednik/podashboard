@@ -2,7 +2,6 @@
 
 @section('content')
     <users-index
-        name="usersIndex"
         token="{{$token}}"
         alliances="{{$alliances}}"
         user="{{\Illuminate\Support\Facades\Auth::user()->id}}"
