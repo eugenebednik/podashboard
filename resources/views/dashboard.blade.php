@@ -72,10 +72,10 @@
                         <tr>
                             <th scope="row">{{$outstandingBuffRequest->id}}</th>
                             <td>
-                                <div id="divClipboard">
+                                <div id="divClipboard" style="display: inline-block">
                                     {{$outstandingBuffRequest->is_alt_request ? $outstandingBuffRequest->alt_name : $outstandingBuffRequest->user_name}}
-                                    <button type="button" class="btn btn-info btn-clipboard" onclick="copyClipboard()">Copy</button>
                                 </div>
+                                <button type="button" class="btn btn-info btn-clipboard" onclick="copyClipboard()">Copy</button>
                             </td>
                             <td>{{$outstandingBuffRequest->user_name}}</td>
                             <td>{{$outstandingBuffRequest->requestType->name}}</td>
