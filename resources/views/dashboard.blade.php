@@ -71,7 +71,12 @@
                         @foreach($outstandingBuffRequests as $outstandingBuffRequest)
                         <tr>
                             <th scope="row">{{$outstandingBuffRequest->id}}</th>
-                            <td>{{$outstandingBuffRequest->is_alt_request ? $outstandingBuffRequest->alt_name : $outstandingBuffRequest->user_name}}</td>
+                            <td>
+                                <div id="divClipboard">
+                                    {{$outstandingBuffRequest->is_alt_request ? $outstandingBuffRequest->alt_name : $outstandingBuffRequest->user_name}}
+                                    <button type="button" class="btn btn-info btn-clipboard" onclick="copyClipboard()">Copy</button>
+                                </div>
+                            </td>
                             <td>{{$outstandingBuffRequest->user_name}}</td>
                             <td>{{$outstandingBuffRequest->requestType->name}}</td>
                             <td><a href="{{ url("fulfill/$outstandingBuffRequest->id") }}" class="btn btn-primary" role="button">{{ __('Fulfill') }}</a></td>
@@ -96,5 +101,29 @@
         setTimeout(function(){
             window.location.reload();
         }, 5000);
+
+        function copyClipboard() {
+            let elm = document.getElementById("divClipboard");
+            // for Internet Explorer
+
+            if(document.body.createTextRange) {
+                let range = document.body.createTextRange();
+                range.moveToElementText(elm);
+                range.select();
+                document.execCommand("Copy");
+                toast.fire('Copy', 'Requester name copied to clipboard.', 'success');
+            }
+            else if(window.getSelection) {
+                // other browsers
+
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(elm);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand("Copy");
+                toast.fire('Copy', 'Requester name copied to clipboard.', 'success');
+            }
+        }
     </script>
 @endsection
