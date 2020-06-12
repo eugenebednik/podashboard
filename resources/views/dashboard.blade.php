@@ -15,6 +15,12 @@
                 </div>
             @endforeach
             <div class="card">
+                <div class="card-header">My Stats</div>
+                <div class="card-body">
+                    <h3>My Completed Requests: <span class="badge badge-success">{{ $countMyRequests }}</span></h3>
+                </div>
+            </div>
+            <div class="card">
                 <div class="card-header">Fulfilled Requests Pending Completion</div>
 
                 <div class="card-body">

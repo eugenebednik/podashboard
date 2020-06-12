@@ -53,7 +53,13 @@ class DashboardController extends Controller
             ->where('outstanding', true)
             ->paginate(self::PER_PAGE);
 
-        return view('dashboard', compact('outstandingBuffRequests', 'fulfilledBuffRequests'));
+        $countMyRequests = BuffRequest::where('handled_by', Auth::user()->id)->count();
+
+        return view('dashboard', compact(
+            'outstandingBuffRequests',
+            'fulfilledBuffRequests',
+            'countMyRequests')
+        );
     }
 
     /**
