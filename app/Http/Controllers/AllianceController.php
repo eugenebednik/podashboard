@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class AllianceController extends Controller
 {
@@ -11,6 +12,7 @@ class AllianceController extends Controller
         $token = config('api.token');
         $alliancesServed = [];
         $allUsers = User::all();
+        $thisUserAllianceId = Auth::user()->alliance->id;
 
         foreach ($allUsers as $user) {
             if (!isset($alliancesServed[$user->alliance->id])) {
@@ -20,6 +22,10 @@ class AllianceController extends Controller
             }
         }
 
-        return view('admin.alliances.index', compact('token', 'alliancesServed'));
+        return view('admin.alliances.index', compact(
+            'token',
+            'alliancesServed',
+            'thisUserAllianceId')
+        );
     }
 }

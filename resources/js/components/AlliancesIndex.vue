@@ -26,7 +26,7 @@
                                     <a href="#" class="btn btn-xs btn-primary" @click="editModal(alliance)">
                                         Edit
                                     </a>
-                                    <a href="#" class="btn btn-xs btn-danger" @click="deleteEntry(alliance.id, index)">
+                                    <a href="#" class="btn btn-xs btn-danger" @click="deleteEntry(alliance.id, index)" v-show="isNotSelf(alliance.id)">
                                         Delete
                                     </a>
                                 </td>
@@ -72,7 +72,7 @@
 
 <script>
     export default {
-        props: ['token', 'served'],
+        props: ['token', 'served', 'alliance'],
         data: function () {
             return {
                 editmode: false,
@@ -101,6 +101,9 @@
             });
         },
         methods: {
+            isNotSelf(id) {
+                return this.alliance != id;
+            },
             requestsServed(id) {
                 let served = this.playersServed;
                 return served[id];
@@ -155,7 +158,7 @@
             deleteEntry(id, index) {
                 swal.fire({
                     title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    text: "All users belonging to this alliance will be deleted! You won't be able to revert this!",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
