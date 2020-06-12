@@ -81,6 +81,11 @@
             @yield('content')
         </main>
     </div>
+    <footer class="footer">
+        <div class="container text-right">
+            <span class="text-muted">Created by [N3O] Daenelys.</span>
+        </div>
+    </footer>
     @yield('scripts')
 </body>
 </html>
