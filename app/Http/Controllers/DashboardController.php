@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BuffRequest;
 use App\Services\DiscordWebhookService;
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +36,22 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $outstandingBuffRequests = BuffRequest::where('outstanding', true)->paginate(self::PER_PAGE);
-        $fulfilledBuffRequests = BuffRequest::where('outstanding', false)->paginate(self::PER_PAGE);
+        $outstandingBuffRequests = BuffRequest::whereNull('handled_by')
+            ->where('outstanding', true)
+            ->paginate(self::PER_PAGE);
+        $fulfilledBuffRequests = BuffRequest::whereNotNull('handled_by')
+            ->where('outstanding', true)
+            ->get();
+
+        foreach ($fulfilledBuffRequests as $buffRequest) {
+            if ($buffRequest->created_at->lt(Carbon::now()->subMinutes(config('buff-requests.minutes-to-disappear')))) {
+                BuffRequest::where('id', $buffRequest->id)->update(['outstanding' => false]);
+            }
+        }
+
+        $fulfilledBuffRequests = BuffRequest::whereNotNull('handled_by')
+            ->where('outstanding', true)
+            ->paginate(self::PER_PAGE);
 
         return view('dashboard', compact('outstandingBuffRequests', 'fulfilledBuffRequests'));
     }
@@ -55,7 +70,6 @@ class DashboardController extends Controller
         $buffRequest = BuffRequest::find($id);
 
         if ($buffRequest) {
-            $buffRequest->outstanding = false;
             $buffRequest->handledBy()->associate(Auth::user());
             $buffRequest->save();
 

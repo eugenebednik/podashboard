@@ -4,21 +4,53 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @foreach($errors->all() as $error)
+                <div class="alert alert-warning" role="alert">
+                    {{ $error }}
+                </div>
+            @endforeach
+            <div class="card">
+                <div class="card-header">Fulfilled Requests Pending Completion</div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Requested By</th>
+                            <th scope="col">Request Type</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($fulfilledBuffRequests as $fulfilledBuffRequest)
+                            <tr>
+                                <th scope="row">{{$fulfilledBuffRequest->id}}</th>
+                                <td>{{$fulfilledBuffRequest->is_alt_request ? $fulfilledBuffRequest->alt_name : $fulfilledBuffRequest->user_name}}</td>
+                                <td>{{$fulfilledBuffRequest->user_name}}</td>
+                                <td>{{$fulfilledBuffRequest->requestType->name}}</td>
+                                <td><span class="badge badge-warning">In Progress</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="card-footer">
+                    {{ $fulfilledBuffRequests->links() }}
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header">Unfulfilled Requests</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-warning" role="alert">
-                            {{ $error }}
-                        </div>
-                    @endforeach
-
                     <table class="table">
                         <thead>
                         <tr>
