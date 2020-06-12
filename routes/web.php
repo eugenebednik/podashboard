@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
+    Route::get('users', 'UserController@index')->name('admin.user.index');
+});
+
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/inactive', 'InactiveController@index')->name('inactive');
 Route::get('/fulfill/{id}', 'DashboardController@fulfill')->name('fulfill');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CheckIsAdminMiddleware
@@ -15,8 +17,21 @@ class CheckIsAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->isAdmin()) {
-            return redirect()->back()->withErrors(['error' => __('Unauthorized.')]);
+        if (!$request->isJson()) {
+            if (!Auth::user()->isAdmin()) {
+                return redirect()->route('dashboard')->withErrors(['error' => __('Unauthorized.')]);
+            }
+        } else {
+            $token = $request->bearerToken();
+
+            /** @var User $user */
+            $user = User::where('api_token', $token)->first();
+
+            if (!$user || !$user->isAdmin()) {
+                return response()
+                    ->json(['errors' => __('Unauthorized')])
+                    ->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            }
         }
 
         return $next($request);

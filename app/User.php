@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,6 +50,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Number of requests this user has served.
+     *
+     * @return int
+     */
+    public function requestCount() : int
+    {
+        return $this->requests->count();
+    }
+
+    /**
      * Is this user active?
      *
      * @return bool
@@ -62,8 +74,18 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function alliance()
+    public function alliance() : BelongsTo
     {
         return $this->belongsTo(Alliance::class);
+    }
+
+    /**
+     * Requests this user has handled.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function requests() : HasMany
+    {
+        return $this->hasMany(BuffRequest::class, 'handled_by');
     }
 }
