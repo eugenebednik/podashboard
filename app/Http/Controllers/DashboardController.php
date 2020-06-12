@@ -44,7 +44,7 @@ class DashboardController extends Controller
             ->get();
 
         foreach ($fulfilledBuffRequests as $buffRequest) {
-            if ($buffRequest->created_at->lt(Carbon::now()->subMinutes(config('buff-requests.minutes-to-disappear')))) {
+            if ($buffRequest->updated_at->lt(Carbon::now()->subMinutes(config('buff-requests.minutes-to-disappear')))) {
                 BuffRequest::where('id', $buffRequest->id)->update(['outstanding' => false]);
             }
         }
