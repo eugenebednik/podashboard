@@ -39,63 +39,73 @@ class LoginController extends Controller
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Request $request
      *
      * @throws DiscordServiceException
      */
-    public function handleDiscordCallback()
+    public function handleDiscordCallback(Request $request)
     {
         $user = Socialite::driver('discord')->user();
-        $serverId = Session::get('server_id');
-        $isNewSetup = Session::get('is_new_setup');
-        Session::forget(['server_id', 'is_new_setup']);
-
-        $server = Server::findOrFail($serverId);
-
-        if (!$this->discordService->isUserAllowedToLogin($user, $server)) {
-            return redirect()
-                ->route('main')
-                ->with('server_id', $server->snowflake)
-                ->withErrors(['message' => __('Login unauthorized.')]);
-        }
+        $serverId = $request->session()->get('server_id');
+        $isNewSetup = $request->session()->pull('is_new_setup');
+        $server = Server::find($serverId);
 
         /** @var User $foundUser */
         $foundUser = User::where('discord_id', $user->id)->first();
 
         if ($foundUser) {
+            if (!$this->discordService->isUserAllowedToLogin($foundUser, $server)
+                && !$foundUser->isAdminOfServer($server))
+            {
+                Session::forget('server_id');
+                return redirect()
+                    ->route('main', ['server_id' => $server->snowflake])
+                    ->withErrors(['message' => __('Login unauthorized.')]);
+            }
+
             $foundUser->name = $user->getName();
             $foundUser->email = $user->getEmail();
             $foundUser->server()->associate($server);
             $foundUser->save();
 
             Auth::login($foundUser);
-            return redirect('/dashboard');
+            return redirect()->route('dashboard');
         } else {
             $newUser = new User();
             $newUser->name = $user->getName();
             $newUser->email = $user->getEmail();
-            $newUser->id = $user->getId();
+            $newUser->discord_id = $user->getId();
             $newUser->api_token = Str::random(60);
             $newUser->server()->associate($server);
+            $newUser->save();
 
             if ($isNewSetup) {
                 $newUser->administratedServers()->attach($server);
+                $newUser->save();
+            } else {
+                if (!$this->discordService->isUserAllowedToLogin($foundUser, $server)) {
+                    return redirect()
+                        ->route('main', ['server_id' => $server->snowflake])
+                        ->withErrors(['message' => __('Login unauthorized.')]);
+                }
             }
 
-            $newUser->save();
-
             Auth::login($newUser);
-
             return redirect()->route('dashboard');
         }
     }
 
     /**
+     * @param Request $request
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function logout()
+    public function logout(Request $request)
     {
+        $serverId = $request->session()->get('server_id');
+        $request->session()->flush();
         Auth::logout();
 
-        return redirect()->route('main');
+        return redirect()->route('main', ['server_id' => $serverId]);
     }
 }

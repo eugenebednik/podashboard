@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +19,20 @@ use App\Http\Controllers\WelcomeController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('main');
 Route::get('login', [LoginController::class, 'redirectToDiscord'])->name('login.index');
-Route::get('login/callback', [LoginController::class, 'handleDiscordCallback'])
-    ->name('login.callback');
 Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
+Route::get('inactive', [WelcomeController::class, 'inactive'])->name('inactive');
+Route::get('server-required', [WelcomeController::class, 'serverRequired'])->name('server-required');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', [\App\Http\Livewire\Dashboard::class])->name('dashboard');
-});
+Route::get('login/callback', [LoginController::class, 'handleDiscordCallback'])
+    ->middleware('session_exists')
+    ->name('login.callback');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
-    Route::get('users', 'UserController@index')->name('admin.user.index');
+Route::group(['middleware' => ['session_exists', 'auth', 'in_guild']], function () {
+    Route::get('dashboard/fulfill', [DashboardController::class, 'fulfill'])->name('dashboard.fulfill');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
+        Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('roles', [RoleController::class, 'index'])->name('admin.roles.index');
+    });
 });

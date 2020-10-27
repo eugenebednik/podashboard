@@ -37,4 +37,20 @@ class Server extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function administrators()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function allowedRoles()
+    {
+        return $this->hasMany(AllowedRole::class);
+    }
 }

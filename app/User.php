@@ -39,13 +39,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return BelongsTo
+     */
+    public function server()
+    {
+        return $this->belongsTo(Server::class);
+    }
 
     /**
      * @return bool
      */
     public function administratedServers() : BelongsToMany
     {
-        return $this->belongsToMany(ServerAdmin::class);
+        return $this->belongsToMany(Server::class);
     }
 
     /**
@@ -76,14 +83,6 @@ class User extends Authenticatable
     public function isAdminOfServer(Server $server)
     {
         return $this->administratedServers->contains($server);
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function server() : BelongsTo
-    {
-        return $this->belongsTo(Server::class);
     }
 
     /**

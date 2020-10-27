@@ -7,6 +7,7 @@ use App\AllowedRole;
 use App\Server;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Contracts\User;
 
@@ -64,7 +65,7 @@ class DiscordService
     }
 
     /**
-     * @param $user
+     * @param User|\App\User|Authenticatable $user
      * @param Server $server
      *
      * @return bool

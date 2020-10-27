@@ -22,11 +22,17 @@ class MoreChangesToDatabase extends Migration
         });
         Schema::enableForeignKeyConstraints();
 
-        Schema::create('server_admins', function (Blueprint $table) {
-            $table->id();
+        Schema::create('server_user', function (Blueprint $table) {
             $table->unsignedBigInteger('server_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            $table->foreign('server_id')
+                ->references('id')
+                ->on('servers')
+                ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
 
         Schema::create('allowed_roles', function (Blueprint $table) {

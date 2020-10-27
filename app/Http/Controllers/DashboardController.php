@@ -1,44 +1,43 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Controllers;
 
 use App\BuffRequest;
+use App\Server;
 use App\Services\DiscordService;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Livewire\Component;
+use Illuminate\Support\Facades\Session;
 use Livewire\WithPagination;
 
-class Dashboard extends Component
+class DashboardController extends Controller
 {
     use WithPagination;
 
-    const PER_PAGE = 5;
+    const PER_PAGE = 15;
 
     /**
      * @var DiscordService
      */
-    public $discordService;
-    public $serverId;
+    protected $discordService;
 
-    protected $paginationTheme = 'bootstrap';
-
-    public function mount(DiscordService $discordService)
+    public function __construct(DiscordService $discordService)
     {
         $this->discordService = $discordService;
-        $this->serverId = Auth::user()->server->id;
     }
 
-    public function render()
+    public function index(Request $request)
     {
-        $outstandingBuffRequests = BuffRequest::where('server_id', $serverId)
+        $server = Server::findOrFail($request->session()->get('server_id'));
+
+        $outstandingBuffRequests = BuffRequest::where('server_id', $server->id)
             ->whereNull('handled_by')
             ->where('outstanding', true)
             ->paginate(self::PER_PAGE);
-        $fulfilledBuffRequests = BuffRequest::where('server_id', $serverId)
+        $fulfilledBuffRequests = BuffRequest::where('server_id', $server->id)
             ->whereNotNull('handled_by')
             ->where('outstanding', true)
             ->get();
@@ -49,18 +48,18 @@ class Dashboard extends Component
             }
         }
 
-        $fulfilledBuffRequests = BuffRequest::where('server_id', $serverId)
+        $fulfilledBuffRequests = BuffRequest::where('server_id', $server->id)
             ->whereNotNull('handled_by')
             ->where('outstanding', true)
             ->paginate(self::PER_PAGE);
 
         $countMyRequests = BuffRequest::where('handled_by', Auth::user()->id)->count();
 
-        return view('livewire.dashboard', compact(
+        return view('dashboard', compact(
                 'outstandingBuffRequests',
                 'fulfilledBuffRequests',
                 'countMyRequests')
-        );
+        )->with(['server' => $server]);
     }
 
     public function fulfill(Request $request, int $id)
@@ -83,6 +82,6 @@ class Dashboard extends Component
             }
         }
 
-        return redirect('/dashboard');
+        return redirect()->route('dashboard');
     }
 }

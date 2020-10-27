@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Server;
 use App\Services\DiscordService;
 use Closure;
 use Illuminate\Http\Request;
@@ -26,11 +27,14 @@ class InGuildMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
+        $server = Server::findOrFail($request->session()->get('server_id'));
 
-        if ($this->discordService->isUserAllowedToLogin($user, $user->server) && $user->isAdminOfServer($user->server)) {
+        if (($this->discordService->isUserAllowedToLogin($user, $server)
+            || $user->isAdminOfServer($server)) && $server->is_active)
+        {
             return $next($request);
         }
 
-        return redirect('/')->withErrors(['message' => __('Login unauthorized.')]);
+        return redirect()->route('main')->withErrors(['message' => __('Login unauthorized.')]);
     }
 }
