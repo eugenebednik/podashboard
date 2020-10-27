@@ -16,6 +16,12 @@ class DoneApiController extends Controller
     {
         $server = $this->getServer($request->input('server_snowflake'));
 
+        // Check to see if anyone is "on duty"
+        if (!$server->hasUserOnDuty()) {
+            return response()->json(['errors' => __('No PO is currently on duty')])
+                ->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+        }
+
         if (BuffRequest::where('discord_snowflake', $request->input('discord_snowflake'))
             ->where('server_id', $server->id)
             ->where('outstanding', true)

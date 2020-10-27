@@ -66,7 +66,7 @@ class DiscordService
     }
 
     /**
-     * Handle the request.
+     * Respond to a user using their snowflake
      *
      * @param string $snowflake
      * @param string $message
@@ -81,6 +81,24 @@ class DiscordService
              'json' => [
                  'content' => "<@$snowflake> $message",
              ]
+        ]);
+    }
+
+    /**
+     * Say something via webhook.
+     *
+     * @param string $message
+     *
+     * @return void
+     *
+     * @throws GuzzleException
+     */
+    public function sayViaWebhook(string $message)
+    {
+        $this->client->request('POST', "webhooks/$this->webhookId/$this->webhookToken", [
+            'json' => [
+                'content' => $message,
+            ]
         ]);
     }
 

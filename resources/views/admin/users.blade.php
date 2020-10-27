@@ -33,6 +33,9 @@
                     </div>
 
                     <div class="card-footer">
+                        <div class="float-right">
+                            <a class="btn btn-outline-secondary" href="{{ url('dashboard') }}">&larr; Back to Dashboard</a>
+                        </div>
                     </div>
                 </div>
             </div>

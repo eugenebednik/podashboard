@@ -28,7 +28,9 @@
                     </div>
 
                     <div class="card-footer">
-
+                        <div class="float-right">
+                            <a class="btn btn-outline-secondary" :href="dashboardUrl">&larr; Back to Dashboard</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,7 +41,7 @@
 <script>
     export default {
         name: "UserRoles",
-        props: ['roles', 'serverId', 'token'],
+        props: ['roles', 'serverId', 'token', 'dashboardUrl'],
 
         data () {
             return {

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -42,7 +43,7 @@ class User extends Authenticatable
     /**
      * @return BelongsTo
      */
-    public function server()
+    public function server() : BelongsTo
     {
         return $this->belongsTo(Server::class);
     }
@@ -78,11 +79,28 @@ class User extends Authenticatable
     /**
      * @param Server $server
      *
-     * @return mixed
+     * @return bool
      */
-    public function isAdminOfServer(Server $server)
+    public function isAdminOfServer(Server $server) : bool
     {
         return $this->administratedServers->contains($server);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function onDuty() : HasOne
+    {
+        return $this->hasOne(OnDuty::class);
+    }
+
+    /**
+     * @param Server $server
+     * @return bool
+     */
+    public function isOnServerDuty(Server $server) : bool
+    {
+        return isset($this->onDuty) && $this->onDuty->server->id === $server->id;
     }
 
     /**
