@@ -65,7 +65,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('login.logout', ['server_id' => $server->snowflake]) }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('login.logout', ['server_id' => $server->snowflake]) }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>

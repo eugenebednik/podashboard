@@ -22,6 +22,7 @@ class QueueApiController extends Controller
                 ->where('server_id', $server->id)
                 ->whereNull('handled_by')
                 ->where('request_type_id', $requestType->id)
+                ->orderBy('created_at', 'asc')
                 ->get()
                 ->toArray();
         }
