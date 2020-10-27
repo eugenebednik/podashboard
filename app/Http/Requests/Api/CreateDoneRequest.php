@@ -9,6 +9,7 @@ class CreateDoneRequest extends FormRequest
     public function rules()
     {
         return [
+            'server_snowflake' => 'required|exists:servers,snowflake',
             'discord_snowflake' => 'required|string|size:18',
         ];
     }

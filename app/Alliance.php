@@ -13,6 +13,16 @@ class Alliance extends Model
     ];
 
     /**
+     * Relationship between a Server and its alliances.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function server()
+    {
+        return $this->belongsTo(Server::class);
+    }
+
+    /**
      * Relationship between the Alliance and its users.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -18,6 +18,14 @@ class BuffRequest extends Model
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function server()
+    {
+        return $this->belongsTo(Server::class);
+    }
+
+    /**
      * Relationship between the buff request and the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

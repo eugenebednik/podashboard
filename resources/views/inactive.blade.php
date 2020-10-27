@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">Dashboard</div>
+                    <div class="card-header">{{__('Dashboard')}}</div>
 
                     <div class="card-body">
-                        We're sorry, but your account has not been activated. Please contact the management to activate it.
+                        {{"We're sorry, but your server account has not been activated in Discord. Please contact the management to activate it."}}
                     </div>
                 </div>
             </div>
