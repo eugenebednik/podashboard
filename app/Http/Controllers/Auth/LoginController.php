@@ -83,7 +83,7 @@ class LoginController extends Controller
                 $newUser->administratedServers()->attach($server);
                 $newUser->save();
             } else {
-                if (!$this->discordService->isUserAllowedToLogin($foundUser, $server)) {
+                if (!$this->discordService->isUserAllowedToLogin($newUser, $server)) {
                     return redirect()
                         ->route('main', ['server_id' => $server->snowflake])
                         ->withErrors(['message' => __('Login unauthorized.')]);
