@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('requests/done', 'Api\DoneApiController', ['only' => ['store']]);
     Route::apiResource('requests/fulfill', 'Api\FulfillRequestApiController', ['only' => 'update']);
     Route::apiResource('requests', 'Api\BuffRequestApiController');
-    Route::apiResource('server', 'Api\ServerApiController', ['only' => ['show', 'store']]);
+    Route::apiResource('server', 'Api\ServerApiController', ['only' => ['show', 'store', 'update']]);
     Route::apiResource('on-duty', 'Api\OnDutyApiController', ['only' => ['update']]);
     Route::apiResource('queue', 'Api\QueueApiController', ['only' => ['show']]);
 

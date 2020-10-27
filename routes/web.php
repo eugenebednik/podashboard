@@ -5,6 +5,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +35,6 @@ Route::group(['middleware' => ['session_exists', 'auth', 'in_guild']], function 
     Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
         Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
         Route::get('roles', [RoleController::class, 'index'])->name('admin.roles.index');
+        Route::get('webhooks', [WebhookController::class, 'index'])->name('admin.webhooks.index');
     });
 });

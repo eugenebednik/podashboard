@@ -31,6 +31,7 @@ class FulfillRequestApiController extends Controller
         // Reply to the user via Discord
         try {
             $this->discordService->respondViaWebhook(
+                $buffRequest->server,
                 $buffRequest->discord_snowflake,
                 __("your buff request for {$buffRequest->requestType->name} has been fulfilled.")
             );

@@ -29,30 +29,16 @@ class DiscordService
     protected $token;
 
     /**
-     * @var string
-     */
-    protected $webhookId;
-
-    /**
-     * @var string
-     */
-    protected $webhookToken;
-
-    /**
      * DiscordWebhookService constructor.
      *
      * @param string $discordBaseUri
      * @param string $appId
      * @param string $token
-     * @param string $webhookId
-     * @param string $webhookToken
      */
     public function __construct(
         string $discordBaseUri,
         string $appId,
-        string $token,
-        string $webhookId,
-        string $webhookToken
+        string $token
     )
     {
         $this->client = new Client([
@@ -61,13 +47,12 @@ class DiscordService
 
         $this->appId = $appId;
         $this->token = $token;
-        $this->webhookId = $webhookId;
-        $this->webhookToken = $webhookToken;
     }
 
     /**
      * Respond to a user using their snowflake
      *
+     * @param Server $server
      * @param string $snowflake
      * @param string $message
      *
@@ -75,9 +60,9 @@ class DiscordService
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function respondViaWebhook(string $snowflake, string $message)
+    public function respondViaWebhook(Server $server, string $snowflake, string $message)
     {
-        $this->client->request('POST', "webhooks/$this->webhookId/$this->webhookToken", [
+        $this->client->request('POST', "webhooks/$server->webhook_id/$server->webhook_token", [
              'json' => [
                  'content' => "<@$snowflake> $message",
              ]
@@ -87,15 +72,16 @@ class DiscordService
     /**
      * Say something via webhook.
      *
+     * @param Server $server
      * @param string $message
      *
      * @return void
      *
      * @throws GuzzleException
      */
-    public function sayViaWebhook(string $message)
+    public function sayViaWebhook(Server $server, string $message)
     {
-        $this->client->request('POST', "webhooks/$this->webhookId/$this->webhookToken", [
+        $this->client->request('POST', "webhooks/$server->webhook_id/$server->webhook_token", [
             'json' => [
                 'content' => $message,
             ]

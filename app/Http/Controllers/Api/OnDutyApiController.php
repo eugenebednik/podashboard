@@ -33,12 +33,14 @@ class OnDutyApiController extends Controller
         $user = User::findOrFail($request->input('user_id'));
 
         if ($server->isUserOnDuty($user)) {
+            $createdAt = $user->onDuty->created_at;
             $user->onDuty()->delete();
             $code = Response::HTTP_NO_CONTENT;
+            $diff = $createdAt->longAbsoluteDiffForHumans(now());
 
             try {
-                $message = "📣 PO is now offline. We thank <@{$user->discord_id}> for their service.";
-                $this->discordService->sayViaWebhook($message);
+                $message = "📣 PO is now offline. We thank <@{$user->discord_id}> for their service which lasted: `$diff`.";
+                $this->discordService->sayViaWebhook($server, $message);
             } catch (GuzzleException $e) {
                 Log::error('Unable to fulfill Discord request: ' . $e->getMessage(), $e->getTrace());
             }
@@ -53,7 +55,7 @@ class OnDutyApiController extends Controller
 
             try {
                 $message = "📣 Hear ye, hear ye! A PO has come online! Please greet your PO <@{$user->discord_id}>!";
-                $this->discordService->sayViaWebhook($message);
+                $this->discordService->sayViaWebhook($server, $message);
             } catch (GuzzleException $e) {
                 Log::error('Unable to fulfill Discord request: ' . $e->getMessage(), $e->getTrace());
             }
