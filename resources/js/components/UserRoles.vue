@@ -10,15 +10,13 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Discord ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Allow/Deny Login</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="role in roles" :key="componentKey">
-                                    <td :class="allowedRoles.includes(role.id) ? 'text-primary text-bold' : 'text-muted'">{{ role.id }}</td>
-                                    <td :class="allowedRoles.includes(role.id) ? 'text-primary text-bold' : 'text-muted'">{{ role.name }}</td>
+                                    <td :class="allowedRoles.includes(role.id) ? 'text-primary' : 'text-muted'">{{ role.name }}</td>
                                     <td>
                                         <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-danger">Deny</button>
                                         <button v-else v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allow</button>
@@ -73,7 +71,10 @@
                             this.reload();
                         }
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        toast.fire('Error', 'Something went wrong.', 'error');
+                        console.log(err)
+                    });
             },
 
             reload () {

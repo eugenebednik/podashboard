@@ -102,7 +102,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $serverId = $request->session()->get('server_id');
+        $serverId = $request->query('server_id');
         $request->session()->flush();
         Auth::logout();
 

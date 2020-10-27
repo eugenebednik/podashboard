@@ -40,5 +40,7 @@ return [
         'redirect' => env('DISCORD_REDIRECT_URI'),
         'api_base_url' => env('DISCORD_API_BASE_URL', 'https://discordapp.com/api/'),
         'token' => env('DISCORD_BOT_TOKEN', null),
+        'webhook-id' => env('DISCORD_WEBHOOK_ID', null),
+        'webhook-token' => env('DISCORD_WEBHOOK_TOKEN', null),
     ],
 ];

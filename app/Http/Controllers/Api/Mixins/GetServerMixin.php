@@ -8,8 +8,7 @@ trait GetServerMixin
 {
     /**
      * @param $serverSnowflake
-     *
-     * @return \Illuminate\Http\JsonResponse|Server
+     * @return mixed
      */
     private function getServer($serverSnowflake)
     {

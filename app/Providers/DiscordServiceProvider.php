@@ -15,7 +15,13 @@ class DiscordServiceProvider extends ServiceProvider
         $config = config('services.discord');
 
         $this->app->singleton(DiscordService::class, function ($app) use ($config) {
-            return new DiscordService($config['api_base_url'], $config['client_id'], $config['token']);
+            return new DiscordService(
+                $config['api_base_url'],
+                $config['client_id'],
+                $config['token'],
+                $config['webhook-id'],
+                $config['webhook-token']
+            );
         });
     }
 }

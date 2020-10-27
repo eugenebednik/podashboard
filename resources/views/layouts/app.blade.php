@@ -57,13 +57,13 @@
                                         <a class="dropdown-item" href="{{ route('admin.user.index') }}">{{ __('User Management') }}</a>
                                         <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Role Management') }}</a>
                                     @endif
-                                    <a class="dropdown-item" href="{{ route('login.logout', ['server_id' => $server->id]) }}"
+                                    <a class="dropdown-item" href="{{ route('login.logout', ['server_id' => $server->snowflake]) }}"
                                        onclick="preventDefault();
                                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('login.logout', ['server_id' => $server->id]) }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('login.logout', ['server_id' => $server->snowflake]) }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>

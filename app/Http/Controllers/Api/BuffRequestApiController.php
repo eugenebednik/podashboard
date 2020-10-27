@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateBuffRequest;
 use App\Http\Requests\Api\UpdateBuffRequest;
 use App\RequestType;
+use App\Server;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +18,31 @@ class BuffRequestApiController extends Controller
 {
     use GetServerMixin;
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = BuffRequest::where('outstanding', true)->get();
+        $serverId = $request->query('server_id');
 
-        return response()->json($data)->setStatusCode(Response::HTTP_OK);
+        $outstanding = BuffRequest::with(['server', 'requestType'])
+            ->where('server_id', $serverId)
+            ->whereNull('handled_by')
+            ->where('outstanding', true)
+            ->get();
+
+        $fulfilled = BuffRequest::with(['server', 'requestType'])
+            ->where('server_id', $serverId)
+            ->whereNotNull('handled_by')
+            ->where('outstanding', true)
+            ->get();
+
+        foreach ($fulfilled as $key => $buffRequest) {
+            if ($buffRequest->updated_at->lt(Carbon::now()->subMinutes(config('buff-requests.minutes-to-disappear')))) {
+                $fulfilled->forget($key);
+                BuffRequest::where('id', $buffRequest->id)->update(['outstanding' => false]);
+            }
+        }
+
+        return response()->json(['outstanding' => $outstanding, 'fulfilled' => $fulfilled])
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     public function show(BuffRequest $buffRequest)

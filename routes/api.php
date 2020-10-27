@@ -13,8 +13,10 @@
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('request-types', 'Api\RequestTypesApiController', ['only' => ['index']]);
-    Route::apiResource('buff-requests/done', 'Api\DoneApiController', ['only' => ['store']]);
-    Route::apiResource('buff-requests', 'Api\BuffRequestApiController');
+    Route::apiResource('requests/count', 'Api\MyCompletedRequestsApiController', ['only' => ['show']]);
+    Route::apiResource('requests/done', 'Api\DoneApiController', ['only' => ['store']]);
+    Route::apiResource('requests/fulfill', 'Api\FulfillRequestApiController', ['only' => 'update']);
+    Route::apiResource('requests', 'Api\BuffRequestApiController');
     Route::apiResource('server', 'Api\ServerApiController', ['only' => ['store']]);
 
     Route::group(['prefix' => 'admin', 'middleware' => 'admin.api'], function () {

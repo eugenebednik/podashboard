@@ -29,13 +29,31 @@ class DiscordService
     protected $token;
 
     /**
+     * @var string
+     */
+    protected $webhookId;
+
+    /**
+     * @var string
+     */
+    protected $webhookToken;
+
+    /**
      * DiscordWebhookService constructor.
      *
      * @param string $discordBaseUri
      * @param string $appId
      * @param string $token
+     * @param string $webhookId
+     * @param string $webhookToken
      */
-    public function __construct(string $discordBaseUri, string $appId, string $token)
+    public function __construct(
+        string $discordBaseUri,
+        string $appId,
+        string $token,
+        string $webhookId,
+        string $webhookToken
+    )
     {
         $this->client = new Client([
             'base_uri' => "$discordBaseUri",
@@ -43,6 +61,8 @@ class DiscordService
 
         $this->appId = $appId;
         $this->token = $token;
+        $this->webhookId = $webhookId;
+        $this->webhookToken = $webhookToken;
     }
 
     /**
@@ -57,7 +77,7 @@ class DiscordService
      */
     public function respondViaWebhook(string $snowflake, string $message)
     {
-        $response = $this->client->request('POST', "webhooks/$this->appId/$this->token", [
+        $this->client->request('POST', "webhooks/$this->webhookId/$this->webhookToken", [
              'json' => [
                  'content' => "<@$snowflake> $message",
              ]

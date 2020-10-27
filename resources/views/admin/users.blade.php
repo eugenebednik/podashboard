@@ -17,7 +17,6 @@
                             <thead>
                             <tr>
                                 <th scope="col">{{ __('Name') }}</th>
-                                <th scope="col">{{ __('Discord ID') }}</th>
                                 <th scope="col">{{ __('Number of Requests Fulfilled') }}</th>
                             </tr>
                             </thead>
@@ -25,7 +24,6 @@
                             @foreach($data as $user)
                                 <tr>
                                     <td>{{$user['name']}}</td>
-                                    <td>{{$user['discord_id']}}</td>
                                     <td>{{$user['count']}}</td>
                                 </tr>
                             @endforeach
@@ -35,7 +33,6 @@
                     </div>
 
                     <div class="card-footer">
-{{--                        {{ $fulfilledBuffRequests->links() }}--}}
                     </div>
                 </div>
             </div>
