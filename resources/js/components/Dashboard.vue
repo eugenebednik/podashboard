@@ -1,18 +1,24 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center" :key="componentKey">
+    <div class="container" :key="componentKey">
+        <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">My Stats</div>
+                    <div class="card-header">
+                        My Stats
+                        <div class="float-right">
+                            <button
+                                :class="this.onDuty === this.userId ? 'btn btn-danger' : 'btn btn-success'"
+                                v-on:click="signOnOffDuty"
+                            >Sign {{ this.onDuty === this.userId ? 'Off' : 'On'}}</button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h3>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h3>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">Fulfilled Requests Pending Completion</div>
-                    <div class="card-body" v-if="loading">Loading...</div>
-
-                    <div class="card-body" v-else>
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -38,9 +44,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">Unfulfilled Requests</div>
-                    <div class="card-body" v-if="loading">Loading...</div>
-
-                    <div class="card-body" v-else>
+                    <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
@@ -80,16 +84,17 @@ export default {
     props: ['serverId', 'userId', 'token'],
     data () {
         return {
-            loading: true,
             componentKey: 0,
+            componentKeyTwo: 1,
             countRequests: 0,
+            onDuty: {},
             outstanding: [],
             fulfilled: [],
             timer: '',
         }
     },
 
-    created() {
+    mounted() {
         this.reload();
         this.timer = setInterval(this.reload, 10000);
     },
@@ -120,6 +125,30 @@ export default {
             }
         },
 
+        signOnOffDuty() {
+            axios
+                .put('/api/on-duty/' + this.serverId, {
+                    user_id: this.userId,
+                },{
+                    headers: {
+                        'Authorization': 'Bearer ' + this.token
+                    }
+                })
+                .then(response => {
+                    if (response.status === 201) {
+                        toast.fire('Success', 'PO is online. You have signed on!', 'success');
+                        this.reload();
+                    } else if (response.status === 204) {
+                        toast.fire('Success', 'PO is offline. You have signed off!', 'success');
+                        this.reload();
+                    }
+                })
+                .catch(err => {
+                    toast.fire('Error', 'Something went wrong!', 'error');
+                    console.log(err)
+                });
+        },
+
         fulfillRequest(id) {
             axios
                 .put('/api/requests/fulfill/' + id, {
@@ -143,7 +172,18 @@ export default {
         },
 
         reload() {
-            this.allowedRoles = [];
+            axios
+                .get('/api/server/' + this.serverId, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.token
+                    }
+                })
+                .then(response => {
+                    if (response.status === 200) {
+                        this.onDuty = response.data.on_duty ? response.data.on_duty.user_id : 0;
+                    }
+                })
+                .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));
             axios
                 .get('/api/requests/?server_id=' + this.serverId, {
                     headers: {
@@ -152,13 +192,11 @@ export default {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                        console.log(response.data);
                         this.outstanding = response.data.outstanding;
                         this.fulfilled = response.data.fulfilled;
                     }
                 })
-                .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'))
-                .finally(() => this.loading = false);
+                .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));
 
             axios
                 .get('/api/requests/count/' + this.userId, {
@@ -171,10 +209,8 @@ export default {
                         this.countRequests = response.data.count;
                     }
                 })
-                .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'))
-                .finally(() => this.loading = false);
+                .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));
 
-            this.loading = true;
             this.componentKey += 1;
         }
     },

@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Server extends Model
 {
@@ -17,7 +20,7 @@ class Server extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function buffRequests()
+    public function buffRequests() : HasMany
     {
         return $this->hasMany(BuffRequest::class);
     }
@@ -25,15 +28,7 @@ class Server extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function alliances()
-    {
-        return $this->hasMany(Alliance::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users()
+    public function users() : HasMany
     {
         return $this->hasMany(User::class);
     }
@@ -41,15 +36,40 @@ class Server extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function administrators()
+    public function administrators() : BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function onDuty() : HasOne
+    {
+        return $this->hasOne(OnDuty::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUserOnDuty() : bool
+    {
+        return isset($this->onDuty) && $this->onDuty->user;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isUserOnDuty(User $user) : bool
+    {
+        return $this->hasUserOnDuty() && $this->onDuty->user->id === $user->id;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function allowedRoles()
+    public function allowedRoles() : HasMany
     {
         return $this->hasMany(AllowedRole::class);
     }

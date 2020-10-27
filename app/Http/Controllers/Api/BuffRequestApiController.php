@@ -52,7 +52,14 @@ class BuffRequestApiController extends Controller
 
     public function store(CreateBuffRequest $request)
     {
+        /** @var Server $server */
         $server = $this->getServer($request->input('server_snowflake'));
+
+        // Check to see if anyone is "on duty"
+        if (!$server->hasUserOnDuty()) {
+            return response()->json(['errors' => __('No PO is currently on duty')])
+                ->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+        }
 
         // Check to see if this user already has a request pending.
         $requestExists = BuffRequest::where('discord_snowflake', $request->input('discord_snowflake'))

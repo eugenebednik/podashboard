@@ -14,7 +14,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         SocialiteWasCalled::class => [
-            // ... other providers
             'SocialiteProviders\\Discord\\DiscordExtendSocialite@handle',
         ],
     ];
