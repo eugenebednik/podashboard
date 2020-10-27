@@ -166,7 +166,7 @@ export default {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                        toast.fire('Success', 'Roles updated successfully.', 'success');
+                        toast.fire('Success', 'Request has been fulfilled.', 'success');
                         this.reload();
                     }
                 })

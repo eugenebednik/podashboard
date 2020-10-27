@@ -4,10 +4,13 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        Webhook Url
+                        Webhook Url Management
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="submit">
+                            <div class="alert alert-danger mt-3">
+                                DANGER ZONE: Please DO NOT modify this unless you KNOW what you are doing, for this could break your dashboard!
+                            </div>
                             <div v-if="success" class="alert alert-success alert-dismissible mt-3">
                                 Webhook URL updated successfully.
                             </div>

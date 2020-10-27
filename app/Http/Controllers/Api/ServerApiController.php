@@ -27,8 +27,8 @@ class ServerApiController extends Controller
                 'snowflake' => $snowflake,
                 'name' => $request->input('name'),
                 'is_active' => true,
-                'webhook_id' => null,
-                'webhook_token' => null,
+                'webhook_id' => $request->input('webhook_id'),
+                'webhook_token' => $request->input('webhook_token'),
             ]);
 
             $code = Response::HTTP_CREATED;
