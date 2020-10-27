@@ -1,6 +1,6 @@
 # podashboard
 
-A dashboard and API for Protocol Officers for GoT: WiC game and the Discord bot.
+A dashboard and API for Protocol Officers for GoT: WiC game and the Discord bot built on Laravel 8 and Vue.js.
 
 ### Disclaimer
 This Dashboard and its associated [Discord bot](https://github.com/eugenebednik/po-bot) are perfectly legal as no game files or special macros are created. This Dashboard and its associated bot are created as a way to facilitate Protocol Officer duties for players, but the titles must be assigned __manually__ in game.
