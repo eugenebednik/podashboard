@@ -9,6 +9,12 @@ use Illuminate\Http\Response;
 
 class ServerApiController extends Controller
 {
+    public function show(int $serverId)
+    {
+        $server = Server::findOrFail($serverId)->load('onDuty');
+        return response()->json($server)->setStatusCode(Response::HTTP_OK);
+    }
+
     public function store(CreateServerRequest $request)
     {
         $snowflake = $request->input('snowflake');
