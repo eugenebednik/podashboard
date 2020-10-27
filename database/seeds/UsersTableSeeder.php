@@ -1,45 +1,25 @@
 <?php
 
 use App\User;
+use App\Server;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        /** @var User $userOne */
-        User::create([
-            'name' => 'Admin',
-            'alliance_id' => 1,
-            'email' => 'admin@podashboard.com',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),
-            'api_token' => \Illuminate\Support\Str::random(60),
-            'is_admin' => true,
-            'active' => true,
+        $server = Server::create([
+            'snowflake' => \Illuminate\Support\Str::random(18),
+            'name' => 'Dummy Server',
+            'is_active' => true,
         ]);
 
-
-        User::create([
-            'name' => 'Test PO Officer',
-            'alliance_id' => 1,
-            'email' => 'test@podashboard.com',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),
-            'api_token' => \Illuminate\Support\Str::random(60),
-            'is_admin' => false,
-            'active' => true,
-        ]);
-
-        User::create([
-            'name' => 'Test Inactive User',
-            'alliance_id' => 1,
-            'email' => 'inactive@podashboard.com',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => \Illuminate\Support\Facades\Hash::make('helloworld'),
-            'api_token' => \Illuminate\Support\Str::random(60),
-            'is_admin' => false,
-            'active' => false,
-        ]);
+        $user = new User();
+        $user->name = 'Admin';
+        $user->discord_id = '00000000000000000';
+        $user->email = 'admin@podashboard.test';
+        $user->api_token = \Illuminate\Support\Str::random(60);
+        $user->server()->associate($server);
+        $user->save();
     }
 }

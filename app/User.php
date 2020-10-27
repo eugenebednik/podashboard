@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'active', 'api_token', 'alliance_id'
+        'name', 'email', 'discord_id', 'api_token'
     ];
 
     /**
@@ -40,13 +40,19 @@ class User extends Authenticatable
     ];
 
     /**
-     * Is this user an admin?
-     *
+     * @return BelongsTo
+     */
+    public function server()
+    {
+        return $this->belongsTo(Server::class);
+    }
+
+    /**
      * @return bool
      */
-    public function isAdmin() : bool
+    public function administratedServers() : BelongsToMany
     {
-        return $this->is_admin ? true : false;
+        return $this->belongsToMany(Server::class);
     }
 
     /**
@@ -60,16 +66,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Is this user active?
-     *
-     * @return bool
-     */
-    public function isActive() : bool
-    {
-        return $this->active ? true : false;
-    }
-
-    /**
      * Relationship between the user and their Alliance.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -77,6 +73,16 @@ class User extends Authenticatable
     public function alliance() : BelongsTo
     {
         return $this->belongsTo(Alliance::class);
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return mixed
+     */
+    public function isAdminOfServer(Server $server)
+    {
+        return $this->administratedServers->contains($server);
     }
 
     /**

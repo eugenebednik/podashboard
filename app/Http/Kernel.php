@@ -60,8 +60,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'active' => \App\Http\Middleware\ChecksIsActiveMiddleware::class,
+        'session_exists' => \App\Http\Middleware\CheckForSessionServerIdMiddleware::class,
         'admin' => \App\Http\Middleware\CheckIsAdminMiddleware::class,
+        'in_guild' => \App\Http\Middleware\InGuildMiddleware::class,
+        'admin.api' => \App\Http\Middleware\CheckIsAdminApiMiddleware::class,
     ];
 
     /**

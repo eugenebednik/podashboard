@@ -7,12 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
-
-import Gate from "./Gate";
-Vue.prototype.$gate = new Gate(window.user);
 
 import swal from 'sweetalert2'
 window.swal = swal;
@@ -29,15 +24,6 @@ window.toast = toast;
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
-Vue.component('pagination', require('laravel-vue-pagination'));
-
-import VueProgressBar from 'vue-progressbar';
-
-Vue.use(VueProgressBar, {
-    color: 'rgb(143, 255, 199)',
-    failedColor: 'red',
-    height: '3px'
-});
 
 /**
  * The following block of code may be used to automatically register your
