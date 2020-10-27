@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\WelcomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,17 +14,16 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('/dashboard');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('main');
+Route::get('login', [LoginController::class, 'redirectToDiscord'])->name('login.index');
+Route::get('login/callback', [LoginController::class, 'handleDiscordCallback'])
+    ->name('login.callback');
+Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
 
-Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [\App\Http\Livewire\Dashboard::class])->name('dashboard');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
     Route::get('users', 'UserController@index')->name('admin.user.index');
-    Route::get('alliances', 'AllianceController@index')->name('admin.alliance.index');
 });
-
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::get('/inactive', 'InactiveController@index')->name('inactive');
-Route::get('/fulfill/{id}', 'DashboardController@fulfill')->name('fulfill');

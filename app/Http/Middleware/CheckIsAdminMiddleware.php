@@ -18,7 +18,7 @@ class CheckIsAdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!$request->isJson()) {
-            if (!Auth::user()->isAdmin()) {
+            if (!Auth::user()->isAdminOfServer(Auth::user()->server)) {
                 return redirect()->route('dashboard')->withErrors(['error' => __('Unauthorized.')]);
             }
         } else {
@@ -27,7 +27,7 @@ class CheckIsAdminMiddleware
             /** @var User $user */
             $user = User::where('api_token', $token)->first();
 
-            if (!$user || !$user->isAdmin()) {
+            if (!$user || !$user->isAdminOfServer($user->server)) {
                 return response()
                     ->json(['errors' => __('Unauthorized')])
                     ->setStatusCode(Response::HTTP_UNAUTHORIZED);

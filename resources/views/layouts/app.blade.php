@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
     @yield('header')
 </head>
 <body>
@@ -42,13 +43,8 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login.index') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -56,17 +52,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if(\Illuminate\Support\Facades\Auth::user()->isAdmin())
+                                    @if(\Illuminate\Support\Facades\Auth::user()->isAdminOfServer(\Illuminate\Support\Facades\Auth::user()->server))
                                         <a class="dropdown-item" href="{{ route('admin.user.index') }}">{{ __('User Management') }}</a>
-                                        <a class="dropdown-item" href="{{ route('admin.alliance.index') }}">{{ __('Alliance Management') }}</a>
                                     @endif
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('login.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('login.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -83,9 +78,10 @@
     </div>
     <footer class="footer">
         <div class="container text-right">
-            <span class="text-muted">Created by [N3O] Daenelys.</span>
+            <span class="text-muted">Created by Daenelys.</span>
         </div>
     </footer>
     @yield('scripts')
+    @livewireScripts
 </body>
 </html>

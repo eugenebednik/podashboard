@@ -34,4 +34,11 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'discord' => [
+        'client_id' => env('DISCORD_CLIENT_ID'),
+        'client_secret' => env('DISCORD_CLIENT_SECRET'),
+        'redirect' => env('DISCORD_REDIRECT_URI'),
+        'api_base_url' => env('DISCORD_API_BASE_URL', 'https://discordapp.com/api/'),
+        'token' => env('DISCORD_BOT_TOKEN', null),
+    ],
 ];

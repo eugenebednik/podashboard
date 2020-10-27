@@ -15,7 +15,7 @@ class ChecksIsActiveMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->isActive()) {
+        if (!Auth::user()->server->is_active) {
             return redirect('/inactive');
         }
 

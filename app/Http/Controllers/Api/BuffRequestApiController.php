@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\BuffRequest;
+use App\Http\Controllers\Api\Mixins\GetServerMixin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateBuffRequest;
 use App\Http\Requests\Api\UpdateBuffRequest;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class BuffRequestApiController extends Controller
 {
+    use GetServerMixin;
+
     public function index()
     {
         $data = BuffRequest::where('outstanding', true)->get();
@@ -26,8 +29,11 @@ class BuffRequestApiController extends Controller
 
     public function store(CreateBuffRequest $request)
     {
+        $server = $this->getServer($request->input('server_snowflake'));
+
         // Check to see if this user already has a request pending.
         $requestExists = BuffRequest::where('discord_snowflake', $request->input('discord_snowflake'))
+            ->where('server_id', $server->id)
             ->where('outstanding', true)
             ->exists();
 
@@ -39,6 +45,7 @@ class BuffRequestApiController extends Controller
         $buffRequest = new BuffRequest();
         $buffRequest->fill($request->all());
         $buffRequest->requestType()->associate(RequestType::findOrFail($request->input('request_type_id')));
+        $buffRequest->server()->associate($server);
         $buffRequest->save();
 
         return response()->json($buffRequest)->setStatusCode(Response::HTTP_CREATED);
@@ -46,8 +53,11 @@ class BuffRequestApiController extends Controller
 
     public function update(UpdateBuffRequest $request, BuffRequest $buffRequest)
     {
+        $server = $this->getServer($request->input('server_snowflake'));
+
         $buffRequest->fill($request->all());
         $buffRequest->requestType()->associate(RequestType::findOrFail($request->input('request_type_id')));
+        $buffRequest->server()->associate($server);
         $buffRequest->handledBy()->associate(Auth::user());
         $buffRequest->save();
 

@@ -9,6 +9,7 @@ class UpdateBuffRequest extends FormRequest
     public function rules()
     {
         return [
+            'server_snowflake' => 'required|exists:servers,snowflake',
             'user_name' => 'required|min:2',
             'discord_snowflake' => 'required|size:18',
             'request_type_id' => 'required|integer|exists:request_types,id',
