@@ -4,13 +4,12 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateServerRequest extends FormRequest
+class UpdateServerRequest extends FormRequest
 {
     public function rules()
     {
         return [
-            'snowflake' => 'required|string|size:18',
-            'name' => 'required',
+            'webhook_url' => 'required|url|min:60'
         ];
     }
 }

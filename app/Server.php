@@ -15,6 +15,8 @@ class Server extends Model
         'snowflake',
         'name',
         'is_active',
+        'webhook_id',
+        'webhook_token',
     ];
 
     /**

@@ -18,9 +18,7 @@ class DiscordServiceProvider extends ServiceProvider
             return new DiscordService(
                 $config['api_base_url'],
                 $config['client_id'],
-                $config['token'],
-                $config['webhook-id'],
-                $config['webhook-token']
+                $config['token']
             );
         });
     }

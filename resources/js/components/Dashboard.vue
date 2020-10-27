@@ -2,6 +2,10 @@
     <div class="container" :key="componentKey">
         <div class="row justify-content-center">
             <div class="col-lg-12">
+                <div v-if="noWebhooks" class="alert alert-danger">
+                    <p>It appears that you have no <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks" target="_blank">Webhook</a> URL entered your server!</p>
+                    <p>It will <span class="text-danger">severely limit this Dashboard's functionality</span>. <span v-if="isUserAdmin">Please go and <a :href="webhookUrl">edit your Webhook URL now</a>.</span></p>
+                </div>
                 <div class="card">
                     <div class="card-header">
                         My Stats
@@ -81,7 +85,7 @@
 <script>
 export default {
     name: "Dashboard",
-    props: ['serverId', 'userId', 'token'],
+    props: ['serverId', 'userId', 'token', 'webhookUrl', 'isUserAdmin'],
     data () {
         return {
             componentKey: 0,
@@ -91,6 +95,7 @@ export default {
             outstanding: [],
             fulfilled: [],
             timer: '',
+            noWebhooks: false,
         }
     },
 
@@ -181,6 +186,7 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.onDuty = response.data.on_duty ? response.data.on_duty.user_id : 0;
+                        this.noWebhooks = !response.data.webhook_id;
                     }
                 })
                 .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));

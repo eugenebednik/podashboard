@@ -47,6 +47,7 @@
                             </li>
                             @endif
                         @else
+                            @if(isset($server))
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -56,9 +57,10 @@
                                     @if(\Illuminate\Support\Facades\Auth::user()->isAdminOfServer($server))
                                         <a class="dropdown-item" href="{{ route('admin.user.index') }}">{{ __('User Management') }}</a>
                                         <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Role Management') }}</a>
+                                        <a class="dropdown-item" href="{{ route('admin.webhooks.index') }}">{{ __('Webhook Management') }}</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('login.logout', ['server_id' => $server->snowflake]) }}"
-                                       onclick="preventDefault();
+                                       onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -68,6 +70,7 @@
                                     </form>
                                 </div>
                             </li>
+                            @endif
                         @endguest
                     </ul>
                 </div>
