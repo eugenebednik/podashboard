@@ -22,5 +22,5 @@ composer install
 php artisan key:generate
 php artisan migrate --seed
 ```
-4. Set up the (https://github.com/eugenebednik/po-bot)[Discord Bot].
+4. Set up the [Discord Bot](https://github.com/eugenebednik/po-bot).
 5. Modify your `.env` with values (see `.env.example` for an example).
