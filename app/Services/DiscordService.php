@@ -5,11 +5,11 @@ namespace App\Services;
 use App\Exceptions\DiscordServiceException;
 use App\AllowedRole;
 use App\Server;
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Response;
-use Laravel\Socialite\Contracts\User;
 
 class DiscordService
 {
@@ -103,7 +103,7 @@ class DiscordService
     }
 
     /**
-     * @param User|\App\User|Authenticatable $user
+     * @param User|Authenticatable|\Laravel\Socialite\Contracts\User
      * @param Server $server
      *
      * @return bool
@@ -112,7 +112,7 @@ class DiscordService
      */
     public function isUserAllowedToLogin($user, Server $server) : bool
     {
-        $id = ($user instanceof User) ? $user->id : $user->discord_id;
+        $id = ($user instanceof User || $user instanceof Authenticatable) ? $user->discord_id : $user->id;
 
         $response = $this->request('GET', "guilds/{$server->snowflake}/members/{$id}", [
             'headers' => [
