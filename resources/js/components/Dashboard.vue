@@ -191,7 +191,7 @@ export default {
                 })
                 .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));
             axios
-                .get('/api/requests/?server_id=' + this.serverId, {
+                .get('/api/requests', {
                     headers: {
                         'Authorization': 'Bearer ' + this.token
                     }

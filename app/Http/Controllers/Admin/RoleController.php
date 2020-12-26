@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    /** @var DiscordService */
+    /**
+     * @var DiscordService
+     */
     protected $discordService;
-
-    protected $server;
 
     public function __construct(DiscordService $discordService)
     {

@@ -59,7 +59,7 @@
         methods: {
             updateRole (roleId, roleName) {
                 axios
-                    .put('/api/admin/roles/' + roleId + '/?server_id=' + this.serverId, {
+                    .put('/api/admin/roles/' + roleId, {
                         role_id: roleId,
                         role_name: roleName,
                     },{
@@ -82,7 +82,7 @@
             reload () {
                 this.allowedRoles = [];
                 axios
-                    .get('/api/admin/server/' + this.serverId + '/?server_id=' + this.serverId, {
+                    .get('/api/admin/server/' + this.serverId, {
                         headers: {
                             'Authorization': 'Bearer ' + this.token
                         }

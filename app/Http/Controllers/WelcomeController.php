@@ -10,26 +10,18 @@ class WelcomeController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::user() && $request->session()->get('server_id')) {
+        $serverId = $request->session()->get('server_id');
+
+        if (Auth::user() && $serverId) {
             return redirect()->route('dashboard');
         }
 
-        $httpHost = $request->getHttpHost();
-        $parts = explode('.', $httpHost);
-        $subdomain = $parts[0];
-
-        $server = Server::where('name', $subdomain)->first();
-
-        if (!$server) {
-            return redirect()->route('inactive');
-        }
-
-        $serverAdminCount = $server->administrators->count();
-
-        $request->session()->put('server_id', $server->id);
-        $request->session()->put('is_new_setup', $serverAdminCount === 0);
-
         return view('auth.login');
+    }
+
+    public function welcome()
+    {
+        return view('welcome');
     }
 
     public function inactive(Request $request)

@@ -64,6 +64,8 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\CheckIsAdminMiddleware::class,
         'in_guild' => \App\Http\Middleware\InGuildMiddleware::class,
         'admin.api' => \App\Http\Middleware\CheckIsAdminApiMiddleware::class,
+        'server_id' => \App\Http\Middleware\ServerIdMiddleware::class,
+        'server_active' => \App\Http\Middleware\IsServerActiveMiddleware::class,
     ];
 
     /**

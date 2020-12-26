@@ -18,15 +18,19 @@ use App\Http\Controllers\Admin\WebhookController;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'index'])->name('main');
-Route::get('login', [LoginController::class, 'redirectToDiscord'])->name('login.index');
-Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
-Route::get('inactive', [WelcomeController::class, 'inactive'])->name('inactive');
+Route::get('welcome', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('server-required', [WelcomeController::class, 'serverRequired'])->name('server-required');
+Route::get('inactive', [WelcomeController::class, 'inactive'])->name('inactive');
 
-Route::get('login/callback', [LoginController::class, 'handleDiscordCallback'])
-    ->middleware('session_exists')
-    ->name('login.callback');
+Route::group(['middleware' => 'server_active'], function () {
+    Route::get('/', [WelcomeController::class, 'index'])->name('main')->middleware('server_active');
+    Route::get('login', [LoginController::class, 'redirectToDiscord'])->name('login.index')->middleware('server_active');
+    Route::get('logout', [LoginController::class, 'logout'])->name('login.logout')->middleware('server_active');
+
+    Route::get('login/callback', [LoginController::class, 'handleDiscordCallback'])
+        ->middleware('server_active')
+        ->name('login.callback');
+});
 
 Route::group(['middleware' => ['session_exists', 'auth', 'in_guild']], function () {
     Route::get('dashboard/fulfill', [DashboardController::class, 'fulfill'])->name('dashboard.fulfill');

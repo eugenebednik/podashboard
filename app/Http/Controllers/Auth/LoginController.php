@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Server;
 use App\Services\DiscordService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +14,9 @@ use App\User;
 
 class LoginController extends Controller
 {
+    /**
+     * @var DiscordService
+     */
     protected $discordService;
 
     /**
@@ -46,18 +48,26 @@ class LoginController extends Controller
     public function handleDiscordCallback(Request $request)
     {
         $user = Socialite::driver('discord')->user();
-        $serverId = $request->session()->get('server_id');
-        $isNewSetup = $request->session()->pull('is_new_setup');
-        $server = Server::find($serverId);
+        $domain = $request->getHttpHost();
+        $parts = explode('.', $domain);
+        $subdomain = $parts[0];
+
+        /** @var Server $server */
+        $server = Server::where('name', $subdomain)->firstOrFail();
 
         /** @var User $foundUser */
         $foundUser = User::where('discord_id', $user->id)->first();
 
         if ($foundUser) {
+            if ($server->administrators->count() === 0) {
+                $foundUser->administratedServers()->attach($server);
+                $foundUser->save();
+            }
+
             if (!$this->discordService->isUserAllowedToLogin($foundUser, $server)
                 && !$foundUser->isAdminOfServer($server))
             {
-                Session::forget('server_id');
+                $request->session()->forget('server_id');
                 return redirect()
                     ->route('main', ['server_id' => $server->snowflake])
                     ->withErrors(['message' => __('Login unauthorized.')]);
@@ -68,6 +78,7 @@ class LoginController extends Controller
             $foundUser->server()->associate($server);
             $foundUser->save();
 
+            $request->session()->put('server_id', $server->id);
             Auth::login($foundUser);
             return redirect()->route('dashboard');
         } else {
@@ -79,7 +90,7 @@ class LoginController extends Controller
             $newUser->server()->associate($server);
             $newUser->save();
 
-            if ($isNewSetup) {
+            if ($server->administrators->count() === 0) {
                 $newUser->administratedServers()->attach($server);
                 $newUser->save();
             } else {
@@ -90,6 +101,7 @@ class LoginController extends Controller
                 }
             }
 
+            $request->session()->put('server_id', $server->id);
             Auth::login($newUser);
             return redirect()->route('dashboard');
         }

@@ -3,12 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Server;
-use App\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CheckIsAdminApiMiddleware
+class ServerIdMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,17 +18,17 @@ class CheckIsAdminApiMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $token = $request->bearerToken();
+        $parts = explode('.', $request->getHttpHost());
+        $subdomain = $parts[0];
+        $server = Server::where('name', $subdomain)->firstOrFail();
 
-        /** @var User $user */
-        $user = User::where('api_token', $token)->firstOrFail();
-        $server = session()->get('server');
-
-        if (!$user || !$user->isAdminOfServer($server)) {
+        if (!$server) {
             return response()
                 ->json(['message' => __('Unauthorized')])
                 ->setStatusCode(Response::HTTP_UNAUTHORIZED);
         }
+
+        session()->put('server', $server);
 
         return $next($request);
     }
