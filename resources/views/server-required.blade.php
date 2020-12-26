@@ -8,7 +8,7 @@
                 <div class="card-header">{{__('Dashboard')}}</div>
 
                 <div class="card-body">
-                    {{ __("We're sorry, but a server ID is required to login to the Dashboard.") }}
+                    {{ __("We're sorry, but a server sub-domain is required to login to the Dashboard.") }}
                 </div>
             </div>
         </div>

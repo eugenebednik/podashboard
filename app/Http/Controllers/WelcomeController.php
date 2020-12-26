@@ -14,13 +14,11 @@ class WelcomeController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $serverSnowflake = $request->query('server_id');
+        $httpHost = $request->getHttpHost();
+        $parts = explode('.', $httpHost);
+        $subdomain = $parts[0];
 
-        if (!$serverSnowflake) {
-            return redirect()->route('server-required');
-        }
-
-        $server = Server::where('snowflake', $serverSnowflake)->first();
+        $server = Server::where('name', $subdomain)->first();
 
         if (!$server) {
             return redirect()->route('inactive');

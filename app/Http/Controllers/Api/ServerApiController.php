@@ -25,7 +25,7 @@ class ServerApiController extends Controller
         if (!$server) {
             $server = Server::create([
                 'snowflake' => $snowflake,
-                'name' => $request->input('name'),
+                'name' => Str::slug($request->input('name')),
                 'is_active' => true,
                 'webhook_id' => $request->input('webhook_id'),
                 'webhook_token' => $request->input('webhook_token'),
