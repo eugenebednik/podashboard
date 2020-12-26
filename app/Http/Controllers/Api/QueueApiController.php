@@ -15,16 +15,15 @@ class QueueApiController extends Controller
     {
         $out = [];
         $server = Server::where('snowflake', $serverSnowflake)->firstOrFail();
-        $requestTypes = RequestType::all();
-
-        foreach ($requestTypes as $requestType) {
-            $out[Str::snake($requestType->name)] = BuffRequest::where('outstanding', true)
+        $requestTypes = RequestType::with(['requests' => function ($query) use ($server) {
+            return $query->where('outstanding', true)
                 ->where('server_id', $server->id)
                 ->whereNull('handled_by')
-                ->where('request_type_id', $requestType->id)
-                ->orderBy('created_at', 'asc')
-                ->get()
-                ->toArray();
+                ->orderBy('created_at', 'asc');
+        }])->get();
+
+        foreach ($requestTypes as $requestType) {
+            $out[Str::snake($requestType->name)] = $requestType->requests->toArray();
         }
 
         return response()->json($out)->setStatusCode(Response::HTTP_OK);
