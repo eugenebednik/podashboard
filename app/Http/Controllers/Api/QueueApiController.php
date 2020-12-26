@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\BuffRequest;
 use App\Http\Controllers\Controller;
 use App\RequestType;
 use App\Server;
