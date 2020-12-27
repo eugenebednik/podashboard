@@ -8,7 +8,7 @@
                     <div class="card-header">{{__('Welcome')}}</div>
 
                     <div class="card-body">
-                        {{"Welcome to the future home of the Protocol Officer Dashboard! Please contact Daenelys for access."}}
+                        {{"Welcome to the future home of the Protocol Officer Dashboard! Please contact DAEnERYS in-game for access."}}
                     </div>
                 </div>
             </div>

@@ -83,7 +83,7 @@
     </div>
     <footer class="footer">
         <div class="container text-right">
-            <span class="text-muted">Created by Daenelys.</span>
+            <span class="text-muted">Created by DAEnERYS.</span>
         </div>
     </footer>
     @yield('scripts')
