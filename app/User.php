@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -67,16 +70,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Relationship between the user and their Alliance.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function alliance() : BelongsTo
-    {
-        return $this->belongsTo(Alliance::class);
-    }
-
-    /**
      * @param Server $server
      *
      * @return bool
@@ -92,6 +85,14 @@ class User extends Authenticatable
     public function onDuty() : HasOne
     {
         return $this->hasOne(OnDuty::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function logs() : HasMany
+    {
+        return $this->hasMany(POLog::class);
     }
 
     /**
@@ -111,5 +112,45 @@ class User extends Authenticatable
     public function requests() : HasMany
     {
         return $this->hasMany(BuffRequest::class, 'handled_by');
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function getAverageTimePerDuty(Server $server) : string
+    {
+        $avg = $this->logs()
+            ->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(logged_in_at, logged_out_at))) AS timediff"))
+            ->where('server_id', $server->id)
+            ->get();
+
+        return CarbonInterval::seconds((int)$avg[0]->timediff)->cascade()->forHumans();
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return string
+     */
+    public function getTotalTimeSpentServing(Server $server) : string
+    {
+        $logs = $this->logs()
+            ->select(DB::raw('TIME_TO_SEC(TIMEDIFF(logged_in_at, logged_out_at)) AS timediff'))
+            ->where('server_id', $server->id)
+            ->get();
+
+        $totalSeconds = 0;
+
+        foreach ($logs as $log) {
+            $totalSeconds += abs((int)$log->timediff);
+        }
+
+        $diff = now()->addSeconds($totalSeconds);
+
+        return $diff->longAbsoluteDiffForHumans(now());
     }
 }

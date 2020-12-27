@@ -16,11 +16,14 @@ class UserController extends Controller
         $users = User::where('server_id', $server->id)->get();
 
         foreach ($users as $user) {
+            /** @var User $user */
             $out[] = [
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'discord_id' => $user->discord_id,
                 'count' => $user->requestCount(),
+                'average_time_per_session' => $user->getAverageTimePerDuty($server) ?? 'n/a',
+                'total_time_spent_serving' => $user->getTotalTimeSpentServing($server) ?? 'n/a',
             ];
         }
 

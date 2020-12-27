@@ -18,6 +18,8 @@
                             <tr>
                                 <th scope="col">{{ __('Name') }}</th>
                                 <th scope="col">{{ __('Number of Requests Fulfilled') }}</th>
+                                <th scope="col">{{ __('Average Time Per Session') }}</th>
+                                <th scope="col">{{ __('Total Time Spent Serving') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -25,6 +27,8 @@
                                 <tr>
                                     <td>{{$user['name']}}</td>
                                     <td>{{$user['count']}}</td>
+                                    <td>{{$user['average_time_per_session']}}</td>
+                                    <td>{{$user['total_time_spent_serving']}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

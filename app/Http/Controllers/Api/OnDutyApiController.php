@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateOnDutyRequest;
 use App\OnDuty;
+use App\POLog;
 use App\Server;
 use App\Services\DiscordService;
 use App\User;
@@ -34,7 +35,9 @@ class OnDutyApiController extends Controller
 
         if ($server->isUserOnDuty($user)) {
             $createdAt = $user->onDuty->created_at;
-            $user->onDuty()->delete();
+            $user->onDuty->log->logged_out_at = now();
+            $user->onDuty->log->save();
+            $user->onDuty->delete();
             $code = Response::HTTP_NO_CONTENT;
             $diff = $createdAt->longAbsoluteDiffForHumans(now());
 
@@ -45,11 +48,22 @@ class OnDutyApiController extends Controller
                 Log::error('Unable to fulfill Discord request: ' . $e->getMessage(), $e->getTrace());
             }
         } else {
-            $server->onDuty()->delete();
+            if ($server->hasUserOnDuty()) {
+                $server->onDuty->log->logged_out_at = now();
+                $server->onDuty->log->save();
+                $server->onDuty->delete();
+            }
+
+            $log = new POLog();
+            $log->logged_in_at = now();
+            $log->server()->associate($server);
+            $log->user()->associate($user);
+            $log->save();
 
             $onDuty = new OnDuty();
             $onDuty->user()->associate($user);
             $onDuty->server()->associate($server);
+            $onDuty->log()->associate($log);
             $onDuty->save();
             $code = Response::HTTP_CREATED;
 
