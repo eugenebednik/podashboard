@@ -83,7 +83,7 @@
     </div>
     <footer class="footer">
         <div class="container text-right">
-            <span class="text-muted">Created by <pre>i DAENERYS i</pre>.</span>
+            <span class="text-muted">Created by <code>i DAENERYS i</code>.</span>
         </div>
     </footer>
     @yield('scripts')

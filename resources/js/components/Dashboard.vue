@@ -36,7 +36,7 @@
                             <tbody>
                             <tr v-for="request in fulfilled">
                                 <th scope="row">{{ request.id }}</th>
-                                <td>{{ request.is_alt_request ? request.alt_name : request.user_name }}</td>
+                                <td><span class="notranslate">{{ request.is_alt_request ? request.alt_name : request.user_name }}</span></td>
                                 <td>{{ request.user_name }}</td>
                                 <td>{{ request.request_type.name }}</td>
                                 <td><span class="badge badge-warning">In Progress</span></td>
