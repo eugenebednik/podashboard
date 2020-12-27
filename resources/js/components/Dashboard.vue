@@ -63,7 +63,7 @@
                             <tr v-for="request in outstanding">
                                 <th scope="row">{{ request.id }}</th>
                                 <td>
-                                    <div id="divClipboard" style="display: inline-block">
+                                    <div id="divClipboard" class="notranslate" style="display: inline-block">
                                         {{ request.is_alt_request ? request.alt_name : request.user_name }}
                                     </div>
                                     <button type="button" class="btn btn-info btn-clipboard" v-on:click="copyClipboard()">Copy</button>
