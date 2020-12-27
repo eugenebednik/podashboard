@@ -8,7 +8,7 @@
                     <div class="card-header">{{__('Welcome')}}</div>
 
                     <div class="card-body">
-                        Welcome to the future home of the Protocol Officer Dashboard! Please contact <code>i DAENERYS i</code> in-game for access.
+                        Welcome to the future home of the Protocol Officer Dashboard! Please contact <code>Daenelys</code> in-game for access.
                     </div>
                 </div>
             </div>
