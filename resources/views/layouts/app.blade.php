@@ -83,7 +83,7 @@
     </div>
     <footer class="footer">
         <div class="container text-right">
-            <span class="text-muted">Created with <span style="color: #5d561b;">&hearts;</span> by <code>Daenelys</code>.</span>
+            <span class="text-muted">Created with <span style="color: #ae1c17;">&hearts;</span> by <code>Daenelys</code>.</span>
         </div>
     </footer>
     @yield('scripts')
