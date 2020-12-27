@@ -37,7 +37,7 @@
                             <tr v-for="request in fulfilled">
                                 <th scope="row">{{ request.id }}</th>
                                 <td><span class="notranslate">{{ request.is_alt_request ? request.alt_name : request.user_name }}</span></td>
-                                <td>{{ request.user_name }}</td>
+                                <td><span class="notranslate">{{ request.user_name }}</span></td>
                                 <td>{{ request.request_type.name }}</td>
                                 <td><span class="badge badge-warning">In Progress</span></td>
                             </tr>
@@ -68,7 +68,7 @@
                                     </div>
                                     <button type="button" class="btn btn-info btn-clipboard" v-on:click="copyClipboard()">Copy</button>
                                 </td>
-                                <td>{{ request.user_name}}</td>
+                                <td><span class="notranslate">{{ request.user_name}}</span></td>
                                 <td>{{ request.request_type.name }}</td>
                                 <td><button v-on:click="fulfillRequest(request.id)" class="btn btn-primary" role="button">Fulfill</button></td>
                             </tr>
