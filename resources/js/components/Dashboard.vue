@@ -17,7 +17,17 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h3>
+                        <div class="row">
+                            <div class="col-sm text-center">
+                                <h6>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h6>
+                            </div>
+                            <div class="col-sm text-center">
+                                <h6>Avg. Time per Session: <span class="badge badge-secondary">{{ avgTime }}</span></h6>
+                            </div>
+                            <div class="col-sm text-center">
+                                <h6>Total Time Served: <span class="badge badge-secondary">{{ totalTime }}</span></h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -91,6 +101,8 @@ export default {
             componentKey: 0,
             componentKeyTwo: 1,
             countRequests: 0,
+            avgTime: 'n/a',
+            totalTime: 'n/a',
             onDuty: {},
             outstanding: [],
             fulfilled: [],
@@ -213,6 +225,8 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.countRequests = response.data.count;
+                        this.avgTime = response.data.avg_time;
+                        this.totalTime = response.data.total_time;
                     }
                 })
                 .catch(err => toast.fire('Error', 'An error has occurred loading data.', 'error'));
