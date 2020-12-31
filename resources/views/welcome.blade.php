@@ -24,6 +24,7 @@
                         <ul>
                             <li>In your server's Discord, go to the channel where the bot is operating.</li>
                             <li>Type in the following commands to request titles: <code>!po +r</code> (Research), <code>!po +b</code> (Building), <code>!po +t</code> (Training) or <code>!po +lc</code> (Lord Commander).</li>
+                            <li>Type <code>!po done</code> when you are done using the title to remove your request from the queue. Alternatively, requests are automatically removed from the queue after 2 minutes have passed.</li>
                             <li>Type <code>!po q</code> to see the current buff queue.</li>
                         </ul>
                         <p>This service is provided <b>free of charge</b>. However, I do have to pay for the server the app is hosted on, so if you would like to support me, please donate! Thank you.</p>
