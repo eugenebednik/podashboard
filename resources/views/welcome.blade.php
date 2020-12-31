@@ -24,7 +24,6 @@
                         <ul>
                             <li>In your server's Discord, go to the channel where the bot is operating.</li>
                             <li>Type in the following commands to request titles: <code>!po +r</code> (Research), <code>!po +b</code> (Building), <code>!po +t</code> (Training) or <code>!po +lc</code> (Lord Commander).</li>
-                            <li>Type <code>!po help</code> to see a list of available commands.</li>
                             <li>Type <code>!po q</code> to see the current buff queue.</li>
                         </ul>
                         <p>This service is provided <b>free of charge</b>. However, I do have to pay for the server the app is hosted on, so if you would like to support me, please donate! Thank you.</p>
