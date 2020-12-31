@@ -83,7 +83,14 @@
     </div>
     <footer class="footer">
         <div class="container text-right">
-            <span class="text-muted">Created with <span style="color: #ae1c17;">&hearts;</span> by <code>Daenelys</code>.</span>
+            <form action="https://www.paypal.com/donate" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_donations" />
+                <input type="hidden" name="business" value="J2WDLR4T3WBD8" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <span class="text-muted">Created with <span style="color: #ae1c17;">&hearts;</span> by <code>Daenelys</code>.</span>
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+            </form>
         </div>
     </footer>
     @yield('scripts')
