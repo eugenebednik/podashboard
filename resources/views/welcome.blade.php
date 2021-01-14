@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>Introduction</h3>
-                        <p>The Protocol Officer Dashboard is a <b>100% legal and free</b> service that facilitates the work of Protocol Officers in the <a href="https://gtarcade.com" target="_blank">Game of Thrones: Winter is Coming</a> browser game, developed by Yoozoo Games.</p>
+                        <p>The Protocol Officer Dashboard is a <b>100% legal and free</b> service that facilitates the work of Protocol Officers in the <a href="https://got.gtarcade.com" target="_blank">Game of Thrones: Winter is Coming</a> browser game, developed by Yoozoo Games.</p>
                         <p>The service consists of a web application and a Discord bot designed to allow your Kingdom's players and Protocol Officers to work together and effectively request and assign King Landing titles. The service is legal because it still requires a live human being to operate the Protocol Officer account.</p>
                         <p>The service comes complete with Discord login integration and in-depth reporting of the performance of your your Protocol Officers, with metrics such as their total served requests, average time spent in service per session and total time spent giving out buffs.</p>
                         <h3>Installation Instructions</h3>
