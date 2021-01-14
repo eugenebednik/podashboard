@@ -5,9 +5,11 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">{{__('Installation Instructions')}}</div>
-
                     <div class="card-body">
+                        <h3>Introduction</h3>
+                        <p>The Protocol Officer Dashboard is a <b>100% legal and free</b> service that facilitates the work of Protocol Officers in the <a href="https://gtarcade.com" target="_blank">Game of Thrones: Winter is Coming</a> browser game, developed by Yoozoo Games.</p>
+                        <p>The service consists of a web application and a Discord bot designed to allow your Kingdom's players and Protocol Officers to work together and effectively request and assign King Landing titles. The service is legal because it still requires a live human being to operate the Protocol Officer account.</p>
+                        <p>The service comes complete with Discord login integration and in-depth reporting of the performance of your your Protocol Officers, with metrics such as their total served requests, average time spent in service per session and total time spent giving out buffs.</p>
                         <h3>Installation Instructions</h3>
                         <p>Please follow these instructions to add the bot and activate the dashboard for your server:</p>
                         <ul>
@@ -27,7 +29,8 @@
                             <li>Type <code>!po done</code> when you are done using the title to remove your request from the queue. Alternatively, requests are automatically removed from the queue after 2 minutes have passed.</li>
                             <li>Type <code>!po q</code> to see the current buff queue.</li>
                         </ul>
-                        <p>This service is provided <b>free of charge</b>. However, I do have to pay for the server the app is hosted on, so if you would like to support me, please donate! Thank you.</p>
+                        <h3>Disclaimer</h3>
+                        <p>As mentioned before, this service is provided <b>free of charge</b>. However, I do have to pay for the server the app is hosted on, so if you would like to support me, please donate! Thank you.</p>
                     </div>
                 </div>
             </div>
