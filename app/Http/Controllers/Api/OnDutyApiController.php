@@ -75,8 +75,6 @@ class OnDutyApiController extends Controller
             }
         }
 
-        $server->load('onDuty');
-
-        return response()->json($server)->setStatusCode($code);
+        return response()->json($server->with('onDuty.user'))->setStatusCode($code);
     }
 }

@@ -11,12 +11,19 @@
                         My Stats
                         <div class="float-right">
                             <button
-                                :class="this.onDuty === this.userId ? 'btn btn-danger' : 'btn btn-success'"
+                                :class="this.onDuty.id === this.userId ? 'btn btn-danger' : 'btn btn-success'"
                                 v-on:click="signOnOffDuty"
-                            >Sign {{ this.onDuty === this.userId ? 'Off' : 'On'}}</button>
+                            >Sign {{ this.onDuty.id === this.userId ? 'Off' : 'On'}}</button>
                         </div>
                     </div>
                     <div class="card-body">
+                        <div v-if="this.onDuty.id !== this.userId" class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning text-center" role="alert">
+                                    Warning! Officer <b>{{ this.onDuty.name }}</b> is currently an active user on PO duty in this kingdom. If you sign on you will sign them offline!
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm text-center">
                                 <h6>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h6>
@@ -95,7 +102,7 @@
 <script>
 export default {
     name: "Dashboard",
-    props: ['serverId', 'userId', 'token', 'webhookUrl', 'isUserAdmin'],
+    props: ['serverId', 'userId', 'onDutyUser', 'token', 'webhookUrl', 'isUserAdmin'],
     data () {
         return {
             componentKey: 0,
@@ -103,7 +110,10 @@ export default {
             countRequests: 0,
             avgTime: 'n/a',
             totalTime: 'n/a',
-            onDuty: {},
+            onDuty: {
+                id: 0,
+                name: '',
+            },
             outstanding: [],
             fulfilled: [],
             timer: '',
@@ -197,7 +207,8 @@ export default {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                        this.onDuty = response.data.on_duty ? response.data.on_duty.user_id : 0;
+                        this.onDuty.id = response.data.on_duty ? response.data.on_duty.user.id : 0;
+                        this.onDuty.name = response.data.on_duty ? response.data.on_duty.user.name : '';
                         this.noWebhooks = !response.data.webhook_id;
                     }
                 })

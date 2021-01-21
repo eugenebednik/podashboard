@@ -11,6 +11,8 @@ class OnDuty extends Model
 
     protected $table = 'on_duty';
 
+    protected $with = ['user'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

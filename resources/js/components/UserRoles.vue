@@ -18,8 +18,8 @@
                                 <tr v-for="role in roles" :key="componentKey">
                                     <td :class="allowedRoles.includes(role.id) ? 'text-primary' : 'text-muted'">{{ role.name }}</td>
                                     <td>
-                                        <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-danger">Deny</button>
-                                        <button v-else v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allow</button>
+                                        <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allowed</button>
+                                        <button v-else v-on:click="updateRole(role.id, role.name)" class="btn btn-danger">Denied</button>
                                     </td>
                                 </tr>
                                 </tbody>

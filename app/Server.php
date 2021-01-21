@@ -19,6 +19,10 @@ class Server extends Model
         'webhook_token',
     ];
 
+    protected $with = [
+        'onDuty'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
