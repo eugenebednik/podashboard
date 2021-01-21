@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div v-if="this.onDuty.id !== this.userId" class="row">
+                        <div v-if="(this.onDuty.id !== this.userId) && (this.onDuty.id !== 0)" class="row">
                             <div class="col-12">
                                 <div class="alert alert-warning text-center" role="alert">
                                     Warning! Officer <b>{{ this.onDuty.name }}</b> is currently an active user on PO duty in this kingdom. If you sign on you will sign them offline!
