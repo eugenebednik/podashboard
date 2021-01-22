@@ -29,15 +29,15 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-secondary shadow-lg sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/images/podblogo.png" width="177" height="60" alt=""/>
                 </a>
 
                 <span class="navbar-text">
-                    <b>Kingdoms In System:</b> <span class="badge badge-primary">{{ \App\Server::count() }}</span><br/>
-                    <b>Total PO Requests Served:</b> <span class="badge badge-primary">{{ \App\BuffRequest::count() }}</span>
+                    Kingdoms In System: <span class="badge badge-info">{{ \App\Server::count() }}</span><br/>
+                    Total PO Requests Served: <span class="badge badge-info">{{ \App\BuffRequest::count() }}</span>
                 </span>
 
                 @if(isset($server))
@@ -89,7 +89,7 @@
                 <input type="hidden" name="cmd" value="_donations" />
                 <input type="hidden" name="business" value="J2WDLR4T3WBD8" />
                 <input type="hidden" name="currency_code" value="USD" />
-                <span class="text-white">Created with <span style="color: #ae1c17;">&hearts;</span> by <b>Daenelys</b>.</span>
+                <span class="text-muted">Created with <span style="color: #ae1c17;">&hearts;</span> by <b>Daenelys</b>.</span>
                 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
                 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
             </form>

@@ -11,11 +11,11 @@
                             <table class="table" :key="componentKey">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Number of Requests Fulfilled</th>
-                                    <th scope="col">Average Time Per Session</th>
-                                    <th scope="col">Total Time Spent Serving</th>
-                                    <th scope="col">Is admin?</th>
+                                    <th class="text-muted" scope="col">Name</th>
+                                    <th class="text-muted" scope="col">Number of Requests Fulfilled</th>
+                                    <th class="text-muted" scope="col">Average Time Per Session</th>
+                                    <th class="text-muted" scope="col">Total Time Spent Serving</th>
+                                    <th class="text-muted" scope="col">Is admin?</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -41,7 +41,7 @@
 
                     <div class="card-footer">
                         <div class="float-right">
-                            <a class="btn btn-outline-secondary" :href="dashboardUrl">&larr; Back to Dashboard</a>
+                            <a class="btn btn-info" :href="dashboardUrl">&larr; Back to Dashboard</a>
                         </div>
                     </div>
                 </div>

@@ -10,8 +10,8 @@
                             <table class="table" :key="componentKey">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Allow/Deny Login</th>
+                                    <th class="text-muted" scope="col">Name</th>
+                                    <th class="text-muted" scope="col">Allow/Deny Login</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -29,7 +29,7 @@
 
                     <div class="card-footer">
                         <div class="float-right">
-                            <a class="btn btn-outline-secondary" :href="dashboardUrl">&larr; Back to Dashboard</a>
+                            <a class="btn btn-info" :href="dashboardUrl">&larr; Back to Dashboard</a>
                         </div>
                     </div>
                 </div>

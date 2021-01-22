@@ -29,10 +29,10 @@
                                 <h6>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h6>
                             </div>
                             <div class="col-sm text-center">
-                                <h6>Avg. Time per Session: <span class="badge badge-secondary">{{ avgTime }}</span></h6>
+                                <h6>Avg. Time per Session: <span class="badge badge-info">{{ avgTime }}</span></h6>
                             </div>
                             <div class="col-sm text-center">
-                                <h6>Total Time Served: <span class="badge badge-secondary">{{ totalTime }}</span></h6>
+                                <h6>Total Time Served: <span class="badge badge-info">{{ totalTime }}</span></h6>
                             </div>
                         </div>
                     </div>
@@ -43,11 +43,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Requested By</th>
-                                <th scope="col">Request Type</th>
-                                <th scope="col">Handle</th>
+                                <th class="text-muted" scope="col">#</th>
+                                <th class="text-muted" scope="col">Name</th>
+                                <th class="text-muted" scope="col">Requested By</th>
+                                <th class="text-muted" scope="col">Request Type</th>
+                                <th class="text-muted" scope="col">Handle</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -69,11 +69,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Requested By</th>
-                                <th scope="col">Request Type</th>
-                                <th scope="col">Handle</th>
+                                <th class="text-muted" scope="col">#</th>
+                                <th class="text-muted" scope="col">Name</th>
+                                <th class="text-muted" scope="col">Requested By</th>
+                                <th class="text-muted" scope="col">Request Type</th>
+                                <th class="text-muted" scope="col">Handle</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -83,11 +83,11 @@
                                     <div id="divClipboard" class="notranslate" style="display: inline-block">
                                         {{ request.is_alt_request ? request.alt_name : request.user_name }}
                                     </div>
-                                    <button type="button" class="btn btn-info btn-clipboard" v-on:click="copyClipboard()">Copy</button>
+                                    <button type="button" class="btn btn-primary btn-clipboard" v-on:click="copyClipboard()">Copy</button>
                                 </td>
                                 <td><span class="notranslate">{{ request.user_name}}</span></td>
                                 <td>{{ request.request_type.name }}</td>
-                                <td><button v-on:click="fulfillRequest(request.id)" class="btn btn-primary" role="button">Fulfill</button></td>
+                                <td><button v-on:click="fulfillRequest(request.id)" class="btn btn-info" role="button">Fulfill</button></td>
                             </tr>
                             </tbody>
                         </table>
