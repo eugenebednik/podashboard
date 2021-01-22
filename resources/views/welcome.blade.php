@@ -18,7 +18,7 @@
                             <li>The bot will create your server within the Dashboard app and provide you with a server link that looks like this: <pre>https://your-server.protocolofficer.net</pre></li>
                             <li>Email <code>Daenelys</code> in game with the link the bot provided you with so that I can activate your Dashboard account.</li>
                             <li>Once I have activated your account, use the URL provided to you by the Discord bot to login and set up your Dashboard.</li>
-                            <li>Having problems installing the bot? Email <code>Daenelys</code> in game for assistance.</li>
+                            <li>Having problems installing the bot? Join my Discord server for help. Scroll down for the link to my Discord server.</li>
                         </ul>
                         <h3>How to Request Titles</h3>
                         <p>Once the bot and the Dashboard have been activated, your players can request titles from your Protocol Officers.</p>
