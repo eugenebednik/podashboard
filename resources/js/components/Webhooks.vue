@@ -19,9 +19,9 @@
                                 <input type="text" class="form-control" name="webhook_url" id="webhook_url" placeholder="Enter copy-pasted webhook URL from your discord server..." v-model="fields.webhook_url" />
                                 <div v-if="errors && errors.webhook_url" class="text-danger">{{ errors.webhook_url[0] }}</div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
                             <div class="float-right">
-                                <a class="btn btn-outline-secondary" :href="dashboardUrl">&larr; Back to Dashboard</a>
+                                <a class="btn btn-info" :href="dashboardUrl">&larr; Back to Dashboard</a>
                             </div>
                         </form>
                     </div>

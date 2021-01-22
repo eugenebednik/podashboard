@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
-                            <a class="btn btn-primary" href="{{ route('login.index') }}">
+                            <a class="btn btn-info" href="{{ route('login.index') }}">
                                 {{ __('Login with Discord') }}
                             </a>
                         </div>
