@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
 {
-    public function rules()
+    public function rules() : array
     {
         return [
             'role_id' => 'required|string|size:18',

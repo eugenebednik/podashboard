@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateBuffRequest extends FormRequest
 {
-    public function rules()
+    public function rules() : array
     {
         return [
             'server_snowflake' => 'required|exists:servers,snowflake',

@@ -20,7 +20,7 @@ class Server extends Model
     ];
 
     protected $with = [
-        'onDuty'
+        'onDuty',
     ];
 
     /**

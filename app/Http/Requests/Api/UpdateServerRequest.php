@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateServerRequest extends FormRequest
 {
-    public function rules()
+    public function rules() : array
     {
         return [
             'webhook_url' => 'required|url|min:60'

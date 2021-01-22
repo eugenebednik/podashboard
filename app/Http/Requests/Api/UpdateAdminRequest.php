@@ -4,12 +4,12 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOnDutyRequest extends FormRequest
+class UpdateAdminRequest extends FormRequest
 {
     public function rules() : array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|int',
         ];
     }
 }

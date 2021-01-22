@@ -4,6 +4,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">Server PO Performance Report</div>
+
                     <div class="card-body">
                         <div v-if="loading">Loading...</div>
                         <div v-else>
@@ -11,15 +12,26 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Allow/Deny Login</th>
+                                    <th scope="col">Number of Requests Fulfilled</th>
+                                    <th scope="col">Average Time Per Session</th>
+                                    <th scope="col">Total Time Spent Serving</th>
+                                    <th scope="col">Is admin?</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="role in roles">
-                                    <td :class="allowedRoles.includes(role.id) ? 'text-primary' : 'text-muted'">{{ role.name }}</td>
+                                <tr v-for="user in users">
+                                    <td :class="adminUsers.includes(user.id) ? 'text-primary' : 'text-muted'">{{ user.name }}</td>
+                                    <td>{{ user.count }}</td>
+                                    <td>{{ user.average_time_per_session }}</td>
+                                    <td>{{ user.total_time_spent_serving }}</td>
                                     <td>
-                                        <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allowed</button>
-                                        <button v-else v-on:click="updateRole(role.id, role.name)" class="btn btn-danger">Denied</button>
+                                        <div v-if="user.id !== selfId">
+                                            <button v-if="adminUsers.includes(user.id)" v-on:click="updateUser(user.id)" class="btn btn-success">Yes</button>
+                                            <button v-else v-on:click="updateUser(user.id)" class="btn btn-danger">No</button>
+                                        </div>
+                                        <div v-else>
+                                            It's you!
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -40,15 +52,16 @@
 
 <script>
     export default {
-        name: "UserRoles",
-        props: ['roles', 'serverId', 'token', 'dashboardUrl'],
+        name: "Users",
+
+        props: ['users', 'serverId', 'token', 'dashboardUrl', 'selfId'],
 
         data () {
             return {
                 loading: true,
                 componentKey: 0,
                 rerenderComponent: true,
-                allowedRoles: [],
+                adminUsers: [],
             }
         },
 
@@ -57,19 +70,18 @@
         },
 
         methods: {
-            updateRole (roleId, roleName) {
+            updateUser(userId) {
                 axios
-                    .put('/api/admin/roles/' + this.serverId, {
-                        role_id: roleId,
-                        role_name: roleName,
-                    },{
+                    .put('/api/admin/users/' + this.serverId, {
+                        user_id: userId,
+                    }, {
                         headers: {
                             'Authorization': 'Bearer ' + this.token
                         }
                     })
                     .then(response => {
                         if (response.status === 201 || response.status === 204) {
-                            toast.fire('Success', 'Roles updated successfully.', 'success');
+                            toast.fire('Success', 'User update successfully.', 'success');
                             this.reload();
                         }
                     })
@@ -79,18 +91,18 @@
                     });
             },
 
-            reload () {
-                this.allowedRoles = [];
+            reload() {
+                this.adminUsers = [];
                 axios
-                    .get('/api/admin/server/' + this.serverId, {
+                    .get('/api/admin/users/' + this.serverId, {
                         headers: {
                             'Authorization': 'Bearer ' + this.token
                         }
                     })
                     .then(response => {
                         if (response.status === 200) {
-                            response.data.allowed_roles.forEach(role => {
-                                this.allowedRoles.push(role.role_id);
+                            response.data.administrators.forEach(admin => {
+                                this.adminUsers.push(admin.id);
                             });
                         }
                     })
@@ -104,5 +116,4 @@
     }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

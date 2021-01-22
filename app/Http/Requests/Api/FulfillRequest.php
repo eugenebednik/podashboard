@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class FulfillRequest extends FormRequest
 {
-    public function rules()
+    public function rules() : array
     {
         return [
             'user_id' => 'required|exists:users,id',

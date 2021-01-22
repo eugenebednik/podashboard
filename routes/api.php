@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'admin', 'middleware' => 'admin.api'], function () {
             Route::apiResource('roles', 'Api\Admin\RoleApiController', ['only' => ['update']]);
             Route::apiResource('server', 'Api\Admin\ServerApiController', ['only' => ['show']]);
+            Route::apiResource('users', 'Api\Admin\UserAdminApiController', ['only' => ['show', 'update']]);
         });
     });
 });

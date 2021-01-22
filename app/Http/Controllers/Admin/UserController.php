@@ -13,12 +13,12 @@ class UserController extends Controller
     {
         $out = [];
         $server = Server::findOrFail($request->session()->get('server_id'));
-        $users = User::where('server_id', $server->id)->get();
+        $users = $server->users;
 
         foreach ($users as $user) {
             /** @var User $user */
             $out[] = [
-                'user_id' => $user->id,
+                'id' => $user->id,
                 'name' => $user->name,
                 'discord_id' => $user->discord_id,
                 'count' => $user->requestCount(),
@@ -27,6 +27,6 @@ class UserController extends Controller
             ];
         }
 
-        return view('admin.users')->with(['data' => $out, 'server' => $server]);
+        return view('admin.users')->with(['users' => $out, 'server' => $server]);
     }
 }
