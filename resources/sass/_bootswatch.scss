@@ -244,3 +244,7 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0
     color: $white;
   }
 }
+
+.navbar-bg-custom {
+    background-image: linear-gradient(15deg, $secondary 0%, lighten($secondary, 15%) 100%);
+}

@@ -29,7 +29,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-secondary shadow-lg sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-lg sticky-top navbar-bg-custom">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/images/podblogo.png" width="177" height="60" alt=""/>
