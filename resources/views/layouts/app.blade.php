@@ -32,7 +32,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="images/podblogo.png" width="177" height="60" alt=""/>
+                    <img src="/images/podblogo.png" width="177" height="60" alt=""/>
                 </a>
 
                 <span class="navbar-text">
