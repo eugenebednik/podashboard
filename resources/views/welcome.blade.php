@@ -13,7 +13,7 @@
                         <h3>Installation Instructions</h3>
                         <p>Please follow these instructions to add the bot and activate the dashboard for your server:</p>
                         <ul>
-                            <li>Add the Discord bot to your discord server by clicking this link: <a href="https://discord.com/oauth2/authorize?client_id=770374612084195328&scope=bot&permissions=537357376" target="_blank">add the bot to your Discord server</a>.</li>
+                            <li><a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=770374612084195328&scope=bot&permissions=537357376" target="_blank">Add The Bot To Your Server</a></li>
                             <li>On your Discord server, go to the channel where you would like the Protocol Officer bot to operate and run the following command: <pre>!pobot setup</pre></li>
                             <li>The bot will create your server within the Dashboard app and provide you with a server link that looks like this: <pre>https://your-server.protocolofficer.net</pre></li>
                             <li>Email <code>Daenelys</code> in game with the link the bot provided you with so that I can activate your Dashboard account.</li>
@@ -29,6 +29,9 @@
                             <li>Type <code>!po done</code> when you are done using the title to remove your request from the queue. Alternatively, requests are automatically removed from the queue after 2 minutes have passed.</li>
                             <li>Type <code>!po q</code> to see the current buff queue.</li>
                         </ul>
+                        <h3>Support & Feedback</h3>
+                        <p>I welcome all sorts of feedback, bug reports, as well as am eager to chat with you and provide support using the system when I can. Join my Discord server to stay in touch!</p>
+                        <p><a class="btn btn-outline-primary" target="_blank" href="https://discord.gg/zr7wrQZeNX">Join The Dashboard Discord Server</a></p>
                         <h3>Disclaimer</h3>
                         <p>As mentioned before, this service is provided <b>free of charge</b>. However, I do have to pay for the server the app is hosted on, so if you would like to support me, please donate! Thank you.</p>
                     </div>
