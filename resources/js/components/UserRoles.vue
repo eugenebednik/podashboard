@@ -3,8 +3,16 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">Server PO Performance Report</div>
+                    <div class="card-header">
+                        <h5 class="text-muted">Discord Role Management</h5>
+                    </div>
+
                     <div class="card-body">
+                        <div>
+                            <p>This page allows you to specify which Discord roles on your server are allowed to login to the Dashboard.
+                                Users having <span class="text-success">allowed</span> roles can login to the system, while users that have <span class="text-danger">denied</span> roles cannot login.
+                            </p>
+                        </div>
                         <div v-if="loading">Loading...</div>
                         <div v-else>
                             <table class="table" :key="componentKey">

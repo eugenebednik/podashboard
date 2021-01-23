@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        Webhook Url Management
+                        <h5 class="text-muted">Webhook Management</h5>
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="submit">

@@ -3,9 +3,16 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">Server PO Performance Report</div>
+                    <div class="card-header">
+                        <h5 class="text-muted">User Statistics and Management</h5>
+                    </div>
 
                     <div class="card-body">
+                        <div>
+                            <p>This page allows you to see performance statistics of your Protocol Officers, as well as grant administrative access to these users.
+                                Please be careful when creating new Administrators as they can remove your own Administrator role.
+                            </p>
+                        </div>
                         <div v-if="loading">Loading...</div>
                         <div v-else>
                             <table class="table" :key="componentKey">

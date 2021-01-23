@@ -8,7 +8,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        My Stats
+                        <h5 class="text-muted">My Statistics</h5>
                         <div class="float-right">
                             <button
                                 :class="this.onDuty.id === this.userId ? 'btn btn-danger' : 'btn btn-success'"
@@ -25,20 +25,27 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm text-center">
-                                <h6>My Completed Requests: <span class="badge badge-success">{{ countRequests }}</span></h6>
+                            <div class="col-sm-3 text-center">
+                                <h6>Requests served: <span class="badge badge-success">{{ countRequests }}</span></h6>
                             </div>
-                            <div class="col-sm text-center">
-                                <h6>Avg. Time per Session: <span class="badge badge-info">{{ avgTime }}</span></h6>
+                            <div class="col-sm-6 text-center">
+                                <h6>Avg. time per session: <span class="badge badge-info">{{ avgTime }}</span></h6>
                             </div>
-                            <div class="col-sm text-center">
-                                <h6>Total Time Served: <span class="badge badge-info">{{ totalTime }}</span></h6>
+                            <div class="col-sm-3 text-center">
+                                <h6>Total time: <span class="badge badge-info">{{ totalTime }}</span></h6>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    &nbsp;
+                </div>
+
                 <div class="card">
-                    <div class="card-header">Fulfilled Requests Pending Completion</div>
+                    <div class="card-header">
+                        <h5 class="text-muted">Fulfilled Requests Pending Completion</h5>
+                    </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
@@ -63,8 +70,15 @@
 
                     </div>
                 </div>
+
+                <div>
+                    &nbsp;
+                </div>
+
                 <div class="card">
-                    <div class="card-header">Unfulfilled Requests</div>
+                    <div class="card-header">
+                        <h5 class="text-muted">Unfulfilled Requests</h5>
+                    </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
