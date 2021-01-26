@@ -39,6 +39,6 @@ class BuffRequestApiController extends Controller
 
     public function show(BuffRequest $buffRequest)
     {
-        return response()->json($buffRequest)->setStatusCode(Response::HTTP_OK);
+        return response()->json($buffRequest->load('server'))->setStatusCode(Response::HTTP_OK);
     }
 }
