@@ -17,6 +17,7 @@
                             <li>On your Discord server, go to the channel where you would like the Protocol Officer bot to operate and run the following command: <pre class="text-muted">!pobot setup</pre></li>
                             <li>The bot will create your server within the Dashboard app and provide you with a server link that looks like this: <pre class="text-muted">https://your-server.protocolofficer.net</pre></li>
                             <li>Email <code>Daenelys</code> in game with the link the bot provided you with so that I can activate your Dashboard account.</li>
+                            <li>While you wait for activation, set up a separate role on your Discord server for users that will be ale to login to the Dashboard, such as <code>Protocol Officer</code> or <code>PO</code>.</li>
                             <li>Once I have activated your account, use the URL provided to you by the Discord bot to login and set up your Dashboard.</li>
                             <li>Having problems installing the bot? Join my Discord server for help. Scroll down for the link to my Discord server.</li>
                         </ul>
