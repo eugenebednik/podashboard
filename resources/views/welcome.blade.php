@@ -18,7 +18,8 @@
                             <li>The bot will create your server within the Dashboard app and provide you with a server link that looks like this: <pre class="text-muted">https://your-server.protocolofficer.net</pre></li>
                             <li>Email <code>Daenelys</code> in game with the link the bot provided you with so that I can activate your Dashboard account.</li>
                             <li>While you wait for activation, set up a separate role on your Discord server for users that will be ale to login to the Dashboard, such as <code>Protocol Officer</code> or <code>PO</code>.</li>
-                            <li>Once I have activated your account, use the URL provided to you by the Discord bot to login and set up your Dashboard.</li>
+                            <li>Once I have activated your account, use the URL provided to you by the Discord bot to login.</li>
+                            <li>Once logged in, click on your name dropdown on the top right of the page and select <b>"Role Management"</b>. Next, allow the role you created in previous steps to login to the server by clicking the red button next to it. When the button turns green, all users having that role in your Discord server will be able to login and use the system.</li>
                             <li>Having problems installing the bot? Join my Discord server for help. Scroll down for the link to my Discord server.</li>
                         </ul>
                         <h3 class="text-white-50">How to Request Titles</h3>
