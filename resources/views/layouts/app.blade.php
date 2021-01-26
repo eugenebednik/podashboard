@@ -60,7 +60,11 @@
                                     @if(\Illuminate\Support\Facades\Auth::user()->isAdminOfServer($server))
                                         <a class="dropdown-item" href="{{ route('admin.user.index') }}">{{ __('User Management') }}</a>
                                         <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Role Management') }}</a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('admin.webhooks.index') }}">{{ __('Webhook Management') }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="https://discord.gg/zr7wrQZeNX" target="_blank">Support & Feedback Discord</a>
+                                        <div class="dropdown-divider"></div>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('login.logout', ['server_id' => $server->snowflake]) }}"
                                        onclick="event.preventDefault();
