@@ -23,9 +23,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="role in roles">
+                                <tr v-for="role in roles" v-if="role.name.toLowerCase() !== 'protocol officer dashboard'">
                                     <td :class="allowedRoles.includes(role.id) ? 'text-primary' : 'text-muted'">{{ role.name }}</td>
-                                    <td v-if="role.name.toLowerCase() !== 'protocol officer dashboard'">
+                                    <td>
                                         <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allowed</button>
                                         <button v-else v-on:click="updateRole(role.id, role.name)" class="btn btn-danger">Denied</button>
                                     </td>
