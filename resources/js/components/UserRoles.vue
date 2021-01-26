@@ -23,7 +23,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="role in roles" v-if="role.name.toLowerCase() !== 'protocol officer dashboard'">
+                                <tr v-for="role in roles" v-if="role.name.toLowerCase() !== 'protocol officer dashboard' && role.name.toLowerCase() !== '@everyone'">
                                     <td :class="allowedRoles.includes(role.id) ? 'text-primary' : 'text-muted'">{{ role.name }}</td>
                                     <td>
                                         <button v-if="allowedRoles.includes(role.id)" v-on:click="updateRole(role.id, role.name)" class="btn btn-success">Allowed</button>
