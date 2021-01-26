@@ -20,6 +20,7 @@
                             <li>While you wait for activation, set up a separate role on your Discord server for users that will be ale to login to the Dashboard, such as <code>Protocol Officer</code> or <code>PO</code>.</li>
                             <li>Once I have activated your account, use the URL provided to you by the Discord bot to login.</li>
                             <li>Once logged in, click on your name dropdown on the top right of the page and select <b>"Role Management"</b>. Next, allow the role you created in previous steps to login to the server by clicking the red button next to it. When the button turns green, all users having that role in your Discord server will be able to login and use the system.</li>
+                            <li>Assign the role mentioned in the previous steps to all your Protocol Officers in your Discord server.</li>
                             <li>Having problems installing the bot? Join my Discord server for help. Scroll down for the link to my Discord server.</li>
                         </ul>
                         <h3 class="text-white-50">How to Request Titles</h3>
