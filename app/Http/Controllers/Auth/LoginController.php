@@ -77,6 +77,7 @@ class LoginController extends Controller
 
         /** @var User $foundUser */
         $foundUser = User::where('discord_id', $user->id)->first();
+        $url = ($request->secure() ? 'https://' : 'http://') . $subdomain . '.' . $domain;
 
         if ($foundUser) {
             if ($server->administrators->count() === 0) {
@@ -84,13 +85,24 @@ class LoginController extends Controller
                 $foundUser->save();
             }
 
-            if (!$this->discordService->isUserAllowedToLogin($foundUser, $server)
-                && !$foundUser->isAdminOfServer($server))
-            {
-                $request->session()->forget('server_id');
+            try {
+                $userAllowedToLogin = $this->discordService->isUserAllowedToLogin($foundUser, $server);
+            } catch (DiscordServiceException $e) {
                 return redirect()
-                    ->route('main', ['server_id' => $server->snowflake])
-                    ->withErrors(['message' => __('Login unauthorized.')]);
+                    ->to($url)
+                    ->with(['server_id' => $server->snowflake])
+                    ->withErrors([
+                        'message' => __("Please ensure that you are a member of and/or have access rights to your Discord server.")
+                    ]);
+            }
+
+            if (!$userAllowedToLogin && !$foundUser->isAdminOfServer($server)) {
+                return redirect()
+                    ->to($url)
+                    ->with(['server_id' => $server->snowflake])
+                    ->withErrors([
+                        'message' => __("Unauthorized.")
+                    ]);
             }
 
             $foundUser->name = $user->getName();
@@ -113,9 +125,21 @@ class LoginController extends Controller
                 $newUser->administratedServers()->attach($server);
                 $newUser->save();
             } else {
-                if (!$this->discordService->isUserAllowedToLogin($newUser, $server)) {
+                try {
+                    $userAllowedToLogin = $this->discordService->isUserAllowedToLogin($newUser, $server);
+                } catch (DiscordServiceException $e) {
                     return redirect()
-                        ->route('main', ['server_id' => $server->snowflake])
+                        ->to($url)
+                        ->with(['server_id' => $server->snowflake])
+                        ->withErrors([
+                            'message' => __("Please ensure that you are a member of and/or have access rights to your Discord server.")
+                        ]);
+                }
+
+                if (!$userAllowedToLogin) {
+                    return redirect()
+                        ->to($url)
+                        ->with(['server_id' => $server->snowflake])
                         ->withErrors(['message' => __('Login unauthorized.')]);
                 }
             }
@@ -124,9 +148,7 @@ class LoginController extends Controller
             Auth::login($newUser);
         }
 
-        $url = ($request->secure() ? 'https://' : 'http://') . $subdomain . '.' . $domain . '/dashboard';
-
-        return redirect()->intended($url);
+        return redirect()->intended($url . '/dashboard');
     }
 
     /**

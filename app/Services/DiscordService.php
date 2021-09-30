@@ -103,7 +103,7 @@ class DiscordService
         $response = $this->request('GET', "guilds/{$server->snowflake}/members/{$id}", [
             'headers' => [
                 'Authorization' => "Bot {$this->token}",
-            ]
+            ],
         ]);
 
         if (!empty($response['user'])) {
@@ -133,7 +133,7 @@ class DiscordService
         return $this->request('GET', "guilds/{$guildSnowflake}/roles", [
             'headers' => [
                 'Authorization' => "Bot {$this->token}",
-            ]
+            ],
         ]);
     }
 

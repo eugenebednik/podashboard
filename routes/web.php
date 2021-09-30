@@ -29,7 +29,7 @@ Route::group(['middleware' => 'server_active'], function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('login.logout')->middleware('server_active');
 });
 
-Route::group(['middleware' => ['session_exists', 'auth', 'in_guild']], function () {
+Route::group(['middleware' => ['session_exists', 'auth', 'in_guild', 'same_server']], function () {
     Route::get('dashboard/fulfill', [DashboardController::class, 'fulfill'])->name('dashboard.fulfill');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
