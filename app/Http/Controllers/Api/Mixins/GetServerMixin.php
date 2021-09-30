@@ -6,11 +6,7 @@ use App\Server;
 
 trait GetServerMixin
 {
-    /**
-     * @param $serverSnowflake
-     * @return mixed
-     */
-    private function getServer($serverSnowflake)
+    private function getServer($serverSnowflake) : Server
     {
         return Server::where('snowflake', $serverSnowflake)->first();
     }

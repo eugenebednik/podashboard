@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateAdminRequest;
 use App\Server;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserAdminApiController extends Controller
 {
-    public function show(Request $request, int $serverId)
+    public function show(Request $request, int $serverId) : JsonResponse
     {
         return response()->json(Server::findOrFail($serverId)->load('administrators'))
             ->setStatusCode(Response::HTTP_OK);
     }
 
-    public function update(UpdateAdminRequest $request, int $serverId)
+    public function update(UpdateAdminRequest $request, int $serverId) : JsonResponse
     {
         /** @var Server $server */
         $server = Server::findOrFail($serverId);

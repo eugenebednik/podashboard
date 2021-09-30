@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Server;
 use App\User;
+use Illuminate\Http\JsonResponse;
 
 class MyCompletedRequestsApiController extends Controller
 {
-    public function show(int $id)
+    public function show(int $id) : JsonResponse
     {
         /** @var User $user */
         $user = User::findOrFail($id);
