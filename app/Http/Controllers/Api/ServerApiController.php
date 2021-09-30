@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateServerRequest;
 use App\Http\Requests\Api\UpdateServerRequest;
 use App\Server;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class ServerApiController extends Controller
 {
-    public function show(int $serverId)
+    public function show(int $serverId) : JsonResponse
     {
         $server = Server::findOrFail($serverId)->load('onDuty');
         return response()->json($server)->setStatusCode(Response::HTTP_OK);
     }
 
-    public function store(CreateServerRequest $request)
+    public function store(CreateServerRequest $request) : JsonResponse
     {
         $snowflake = $request->input('snowflake');
         $server = Server::where('snowflake', $snowflake)->first();
@@ -39,7 +40,8 @@ class ServerApiController extends Controller
         return response()->json($server)->setStatusCode($code);
     }
 
-    public function update(UpdateServerRequest $request, int $id) {
+    public function update(UpdateServerRequest $request, int $id) : JsonResponse
+    {
         $server = Server::findOrFail($id);
 
         $parts = Str::replaceFirst(

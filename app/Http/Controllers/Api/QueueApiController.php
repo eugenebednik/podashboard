@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\RequestType;
 use App\Server;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class QueueApiController extends Controller
 {
-    public function show(string $serverSnowflake)
+    public function show(string $serverSnowflake) : JsonResponse
     {
         $out = [];
         $server = Server::where('snowflake', $serverSnowflake)->firstOrFail();

@@ -6,13 +6,14 @@ use App\BuffRequest;
 use App\Http\Controllers\Api\Mixins\GetServerMixin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateDoneRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class DoneApiController extends Controller
 {
     use GetServerMixin;
 
-    public function store(CreateDoneRequest $request)
+    public function store(CreateDoneRequest $request) : JsonResponse
     {
         $server = $this->getServer($request->input('server_snowflake'));
 
