@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class LoginController extends Controller
 {
@@ -36,7 +37,17 @@ class LoginController extends Controller
      */
     public function redirectToDiscord(Request $request)
     {
-        return Socialite::driver('discord')->redirect();
+        $domain = $request->getHttpHost();
+        $parts = explode('.', $domain);
+        $subdomain = array_shift($parts);
+        $domain = implode('.', $parts);
+
+        return Socialite::driver('discord')
+            ->with([
+                'redirect_uri' => ($request->secure() ? 'https://' : 'http://') . $domain . '/login/callback',
+                'state' => base64_encode('subdomain=' . $subdomain),
+            ])
+            ->redirect();
     }
 
     /**
@@ -47,10 +58,19 @@ class LoginController extends Controller
      */
     public function handleDiscordCallback(Request $request)
     {
-        $user = Socialite::driver('discord')->user();
-        $domain = $request->getHttpHost();
-        $parts = explode('.', $domain);
-        $subdomain = $parts[0];
+        $state = $request->input('state');
+        $host = $request->getHttpHost();
+        $parts = explode('.', $host);
+
+        if (count($parts) > 2) {
+            array_shift($parts);
+        }
+
+        $domain = implode('.', $parts);
+        $user = Socialite::driver('discord')->stateless()->user();
+
+        parse_str(base64_decode($state), $result);
+        $subdomain = $result['subdomain'];
 
         /** @var Server $server */
         $server = Server::where('name', $subdomain)->firstOrFail();
@@ -80,7 +100,6 @@ class LoginController extends Controller
 
             $request->session()->put('server_id', $server->id);
             Auth::login($foundUser);
-            return redirect()->route('dashboard');
         } else {
             $newUser = new User();
             $newUser->name = $user->getName();
@@ -103,8 +122,11 @@ class LoginController extends Controller
 
             $request->session()->put('server_id', $server->id);
             Auth::login($newUser);
-            return redirect()->route('dashboard');
         }
+
+        $url = ($request->secure() ? 'https://' : 'http://') . $subdomain . '.' . $domain . '/dashboard';
+
+        return redirect()->intended($url);
     }
 
     /**

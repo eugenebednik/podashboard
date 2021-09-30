@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\FulfillRequest;
 use App\Services\DiscordService;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,7 @@ class FulfillRequestApiController extends Controller
         $this->discordService = $discordService;
     }
 
-    public function update(FulfillRequest $request, int $id)
+    public function update(FulfillRequest $request, int $id) : JsonResponse
     {
         $buffRequest = BuffRequest::findOrFail($id);
         $buffRequest->handledBy()->associate($request->input('user_id'));

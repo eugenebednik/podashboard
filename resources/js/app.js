@@ -5,8 +5,9 @@
  */
 
 require('./bootstrap');
+import Vue from 'vue'
+window.Vue = Vue;
 
-window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform';
 
 import swal from 'sweetalert2'

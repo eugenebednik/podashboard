@@ -17,10 +17,11 @@ This Dashboard and its associated [Discord bot](https://github.com/eugenebednik/
 1. Clone the repository onto your server.
 2. Set up the `public` directory within the repository to be the web server root for your application domain/sub-domain.
 3. From within the cloned directory, run (in that order):
+4. Modify your `.env` with values (see `.env.example` for an example).
+
 ```bash
 composer install
 php artisan key:generate
 php artisan migrate --seed
 ```
-4. Set up the [Discord Bot](https://github.com/eugenebednik/po-bot).
-5. Modify your `.env` with values (see `.env.example` for an example).
+5. Set up the [Discord Bot](https://github.com/eugenebednik/po-bot).

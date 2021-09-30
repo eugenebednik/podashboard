@@ -9,6 +9,7 @@ use App\Http\Requests\Api\CreateBuffRequest;
 use App\Http\Requests\Api\UpdateBuffRequest;
 use App\RequestType;
 use App\Server;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class BotRequestsApiController extends Controller
 {
     use GetServerMixin;
 
-    public function store(CreateBuffRequest $request)
+    public function store(CreateBuffRequest $request) : JsonResponse
     {
         /** @var Server $server */
         $server = $this->getServer($request->input('server_snowflake'));
@@ -47,7 +48,7 @@ class BotRequestsApiController extends Controller
         return response()->json($buffRequest)->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function update(UpdateBuffRequest $request, BuffRequest $buffRequest)
+    public function update(UpdateBuffRequest $request, BuffRequest $buffRequest) : JsonResponse
     {
         $server = $this->getServer($request->input('server_snowflake'));
 
