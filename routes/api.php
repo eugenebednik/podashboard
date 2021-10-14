@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,23 +13,26 @@
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::apiResource('server', 'Api\ServerApiController', ['only' => ['show', 'store', 'update']]);
-    Route::apiResource('queue', 'Api\QueueApiController', ['only' => ['show']]);
-    Route::apiResource('bot-requests', 'Api\BotRequestsApiController', ['only' => ['store', 'update', 'destroy']]);
-    Route::apiResource('bot-requests/done', 'Api\DoneApiController', ['only' => ['store']]);
+Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function () {
+    Route::apiResource('server', 'ServerApiController', ['only' => ['show', 'store', 'update']]);
+    Route::apiResource('queue', 'QueueApiController', ['only' => ['show']]);
+    Route::apiResource('bot-requests', 'BotRequestsApiController', ['only' => ['store', 'update', 'destroy']]);
+    Route::apiResource('bot-requests/done', 'DoneApiController', ['only' => ['store']]);
 
     Route::group(['middleware' => 'server_id'], function () {
-        Route::apiResource('request-types', 'Api\RequestTypesApiController', ['only' => ['index']]);
-        Route::apiResource('requests', 'Api\BuffRequestApiController', ['only' => ['index', 'show']]);
-        Route::apiResource('requests/count', 'Api\MyCompletedRequestsApiController', ['only' => ['show']]);
-        Route::apiResource('requests/fulfill', 'Api\FulfillRequestApiController', ['only' => 'update']);
-        Route::apiResource('on-duty', 'Api\OnDutyApiController', ['only' => ['update']]);
+        Route::apiResource('request-types', 'RequestTypesApiController', ['only' => ['index']]);
+        Route::apiResource('requests', 'BuffRequestApiController', ['only' => ['index', 'show']]);
+        Route::apiResource('requests/count', 'MyCompletedRequestsApiController', ['only' => ['show']]);
+        Route::apiResource('requests/fulfill', 'FulfillRequestApiController', ['only' => 'update']);
+        Route::apiResource('on-duty', 'OnDutyApiController', ['only' => ['update']]);
 
-        Route::group(['prefix' => 'admin', 'middleware' => 'admin.api'], function () {
-            Route::apiResource('roles', 'Api\Admin\RoleApiController', ['only' => ['update']]);
-            Route::apiResource('server', 'Api\Admin\ServerApiController', ['only' => ['show']]);
-            Route::apiResource('users', 'Api\Admin\UserAdminApiController', ['only' => ['show', 'update']]);
+        Route::group(['prefix' => 'admin', 'middleware' => 'admin.api', 'namespace' => 'Admin'], function () {
+            Route::apiResource('roles', 'RoleApiController', ['only' => ['update']]);
+            Route::apiResource('server', 'ServerApiController', [
+                'as' => 'server-admin',
+                'only' => ['show']
+            ]);
+            Route::apiResource('users', 'UserAdminApiController', ['only' => ['show', 'update']]);
         });
     });
 });
