@@ -39,8 +39,16 @@ return [
         'client_secret' => env('DISCORD_CLIENT_SECRET'),
         'redirect' => env('DISCORD_REDIRECT', '/login/callback'),
         'api_base_url' => env('DISCORD_API_BASE_URL', 'https://discordapp.com/api/'),
-        'token' => env('DISCORD_BOT_TOKEN', null),
-        'webhook-id' => env('DISCORD_WEBHOOK_ID', null),
-        'webhook-token' => env('DISCORD_WEBHOOK_TOKEN', null),
+        'token' => env('DISCORD_BOT_TOKEN', 'your-bot-token'),
+        'webhook-id' => env('DISCORD_WEBHOOK_ID', 'your-webhook-id'),
+        'webhook-token' => env('DISCORD_WEBHOOK_TOKEN', 'your-webhook-token'),
+    ],
+
+    'cloudflare' => [
+        'base-uri' => env('CLOUDFLARE_API_BASE_URL', 'https://api.cloudflare.com/client/v4/'),
+        'server-ip' => env('CLOUDFLARE_SERVER_IP', '127.0.0.1'),
+        'zone-id' => env('CLOUDFLARE_ZONE_IDENTIFIER', 'your-zone-id'),
+        'api-token' => env('CLOUDFLARE_API_TOKEN', 'your-api-key'),
+        'email' => env('CLOUDFLARE_EMAIL', 'you@yourdomain.com')
     ],
 ];
